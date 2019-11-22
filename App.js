@@ -1,26 +1,37 @@
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-import Home from './src/screens/Home';
 import Settings from './src/screens/Settings';
+import Login from './src/screens/Login';
+import SignUp from './src/screens/SignUp';
+import CarsScreen from './src/screens/CarsScreen';
 
 const MainNavigator = createStackNavigator(
   {
-    Home: {
-      screen: Home,
+    Login: {
+      screen: Login,
       navigationOptions: {
-        title: 'Home',
+        header: null,
       },
     },
-    Settings: {
-      screen: Settings,
+    SignUp: {
+      screen: SignUp,
       navigationOptions: {
-        title: 'Settings',
+        header: null,
+      },
+    },
+    CarScreen: {
+      screen: CarsScreen,
+      navigationOptions: {
+        headerStyle: {
+          backgroundColor: 'transparent',
+        },
+        headerTintColor: '#673AB7',
       },
     },
   },
   {
-    initialRouteName: 'Home',
-    // headerLayoutPreset: "center"
+    initialRouteName: 'Login',
+    headerLayoutPreset: 'center',
   },
 );
 

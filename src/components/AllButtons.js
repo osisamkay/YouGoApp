@@ -1,15 +1,18 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
+import {Button, Text} from 'native-base';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
+// const {width} = Dimensions.get('screen'); // to get screen dimension (width and height)
 
 const AllButton = ({title, handlePress}) => {
   return (
-    <View>
-      <TouchableOpacity>
-        <Text style={styles.button} onPress={handlePress}>
-          {title}
-        </Text>
-      </TouchableOpacity>
-    </View>
+    <Button style={styles.button} onPress={handlePress}>
+      <Text style={styles.text}>{title}</Text>
+    </Button>
   );
 };
 
@@ -17,14 +20,20 @@ export default AllButton;
 
 const styles = StyleSheet.create({
   button: {
-    textAlign: 'center',
-    width: 250,
-    backgroundColor: 'teal',
-    paddingVertical: 20,
-    marginVertical: 20,
+    width: wp('91%'),
+    // maxWidth: 500,
+    paddingHorizontal: 12,
+    height: 50,
+    backgroundColor: '#673AB7',
+    justifyContent: 'center',
+    borderRadius: 6,
+    fontFamily: 'Roboto',
+  },
+  text: {
     textTransform: 'capitalize',
     color: '#fff',
-    fontWeight: '900',
-    borderRadius: 5,
+    fontWeight: 'bold',
+    fontSize: 15,
+    textAlign: 'center',
   },
 });
