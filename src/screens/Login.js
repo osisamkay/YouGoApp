@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -9,13 +9,10 @@ import {
 } from 'react-native';
 import AllButton from '../components/AllButtons';
 import TextComponent from '../components/TextComponent';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 import Modals from '../components/Modals';
 
 const Login = ({navigation}) => {
+  const [modal, setModal] = useState(false);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container2}>
@@ -33,7 +30,7 @@ const Login = ({navigation}) => {
             <View style={{marginBottom: 19}}>
               <TextComponent label="Password" />
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setModal(!modal)}>
               <Text style={styles.link}>Forgot Password?</Text>
             </TouchableOpacity>
           </View>
@@ -53,7 +50,15 @@ const Login = ({navigation}) => {
                 Sign Up
               </Text>
             </TouchableOpacity>
-            <Modals modalVisible={false} />
+            <Modals
+              modalVisible={modal}
+              handleOutside={() => {
+                setModal(false);
+              }}
+              swipe={() => {
+                setModal(false);
+              }}
+            />
           </View>
         </View>
       </View>

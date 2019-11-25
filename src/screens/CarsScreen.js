@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,30 +7,51 @@ import {
   Dimensions,
   TouchableOpacity,
   ScrollView,
+  Animated,
+  NativeModules,
+  LayoutAnimation,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons/';
 import Cars from '../components/Cars';
 import {CarData} from '../CarData';
 import LinearGradient from 'react-native-linear-gradient';
 import AllButton from '../components/AllButtons';
-const {height} = Dimensions.get('window');
+import * as Animatable from 'react-native-animatable';
+const {height} = Dimensions.get('screen');
 
-const CarsScreen = () => {
+const {UIManager} = NativeModules;
+UIManager.setLayoutAnimationEnabledExperimental &&
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+
+const CarsScreen = ({navigation}) => {
   const [type, setType] = useState(false);
   const [bot, setBot] = useState(true);
   const [brand, setBrand] = useState(true);
 
+  const handleRef = useRef();
+  useEffect(() => handleRef.current && handleRef.current.focus());
+
+  const bounce = () =>
+    this.view
+      .bounce(800)
+      .then(endState =>
+        console.log(endState.finished ? 'bounce finished' : 'bounce cancelled'),
+      );
+
   // to slide bottom viw uo
   const onpressd = () => {
+    LayoutAnimation.easeInEaseOut();
     setBot(!bot);
   };
   // to show types
   const handleType = () => {
+    LayoutAnimation.easeInEaseOut();
     setType(!type);
     setBrand(true);
   };
   // to show Brands
   const handleBrand = () => {
+    LayoutAnimation.easeInEaseOut();
     setBrand(!brand);
     setType(false);
   };
@@ -68,8 +89,8 @@ const CarsScreen = () => {
         colors={['#673AB7', '#370B87']}
         style={
           bot
-            ? {...styles.bottom, height: height / 2.5}
-            : {...styles.bottom, height: height * 0.725}
+            ? {...styles.bottom, height: height / 2.65}
+            : {...styles.bottom, height: height * 0.68}
         }>
         <TouchableOpacity
           onPress={onpressd}
@@ -176,7 +197,12 @@ const CarsScreen = () => {
             </View>
           </View>
           <View>
-            <AllButton title="Next" />
+            <AllButton
+              title="Next"
+              handlePress={() => {
+                navigation.navigate('History');
+              }}
+            />
           </View>
         </View>
       </LinearGradient>

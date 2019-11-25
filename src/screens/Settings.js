@@ -3,7 +3,6 @@ import {View, Text, StyleSheet} from 'react-native';
 import AllButton from '../components/AllButtons';
 
 const Settings = ({navigation}) => {
-  console.log('rigger');
   return (
     <View style={styles.container}>
       <Text style={styles.text}>"This is the settings screen"</Text>

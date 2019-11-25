@@ -2,14 +2,15 @@ import React from 'react';
 import {View, Text, StyleSheet, Alert} from 'react-native';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import TextComponent from './TextComponent';
-import {widthPercentageToDP} from 'react-native-responsive-screen';
 import {Item, Input, Label} from 'native-base';
 import {Button} from 'native-base';
 
-const Modals = ({modalVisible}) => {
+const Modals = ({modalVisible, handleOutside, swipe}) => {
   return (
-    <Modal isVisible={modalVisible}>
+    <Modal
+      isVisible={modalVisible}
+      animationInTiming={600}
+      onBackdropPress={handleOutside}>
       <View style={styles.container}>
         <View>
           <View style={styles.iconset}>
