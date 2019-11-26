@@ -2,21 +2,21 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import AllButton from '../components/AllButtons';
 
-const Settings = ({navigation}) => {
+const HomeScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>"This is the settings screen"</Text>
       <AllButton
-        title="go to home screen"
+        title="go to Login screen"
         handlePress={() => {
-          navigation.navigate('Home');
+          navigation.navigate('Login');
         }}
       />
     </View>
   );
 };
 
-export default Settings;
+export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -3,7 +3,7 @@ import {View, Text, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 import {NotiData} from '../NotificarionData';
 import NotificationComponent from '../components/NotificationComponent';
 import BottomTab from '../components/FooterTab';
-import TabNavigator from '../components/FooterTab';
+// import TabNavigator from '../components/FooterTab';
 
 const Notifications = () => {
   return (
@@ -23,7 +23,7 @@ const Notifications = () => {
           })}
         </ScrollView>
       </View>
-      <TabNavigator />
+      {/* <TabNavigator /> */}
     </SafeAreaView>
   );
 };
@@ -35,5 +35,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 17,
     marginTop: 7,
   },
-  scrollContainer: {height: '93%'},
+  // scrollContainer: {height: '93%'},
 });

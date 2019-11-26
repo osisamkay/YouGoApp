@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {createAppContainer} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
@@ -10,9 +10,9 @@ import History from '../screens/History';
 
 const TabNavigator = createBottomTabNavigator(
   {
-    Home: SignUp,
+    Home: {screen: SignUp},
     // Notifications: Notifications,
-    Settings: Login,
+    Settings: {screen: Login},
     History: History,
   },
   {
@@ -27,6 +27,7 @@ const TabNavigator = createBottomTabNavigator(
           // You can check the implementation below.
           //   IconComponent = HomeIconWithBadge;
         } else if (routeName === 'Settings') {
+          // navigation.navigate('Settings');
           iconName = `ios-options`;
         } else if (routeName === 'Notifications') {
           iconName = 'ios-mail';
@@ -45,4 +46,7 @@ const TabNavigator = createBottomTabNavigator(
   },
 );
 
-export default createAppContainer(TabNavigator);
+// export default createAppContainer();
+const App = createAppContainer(TabNavigator);
+
+export default App;

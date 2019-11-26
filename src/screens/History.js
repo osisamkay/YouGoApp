@@ -2,8 +2,6 @@ import React, {useState} from 'react';
 import {View, Text, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 import {NotiData} from '../NotificarionData';
 import NotificationComponent from '../components/NotificationComponent';
-import BottomTab from '../components/FooterTab';
-import TabNavigator from '../components/FooterTab';
 
 const History = () => {
   return (
@@ -23,7 +21,6 @@ const History = () => {
           })}
         </ScrollView>
       </View>
-      <TabNavigator />
     </SafeAreaView>
   );
 };
@@ -35,5 +32,4 @@ const styles = StyleSheet.create({
     marginHorizontal: 17,
     marginTop: 7,
   },
-  scrollContainer: {height: '93%'},
 });

@@ -40,7 +40,13 @@ const SignUp = ({navigation}) => {
         </View>
       </View>
       <View style={styles.bottom}>
-        <AllButton style={{textAlign: 'center'}} title="sign up" />
+        <AllButton
+          style={{textAlign: 'center'}}
+          title="sign up"
+          handlePress={() => {
+            navigation.navigate('Home');
+          }}
+        />
         <View style={styles.linkGroup}>
           <Text>Already Have an account?</Text>
           <TouchableOpacity>

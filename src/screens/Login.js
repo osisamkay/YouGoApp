@@ -9,9 +9,13 @@ import {
 } from 'react-native';
 import AllButton from '../components/AllButtons';
 import TextComponent from '../components/TextComponent';
-import Modals from '../components/Modals';
+import TokenModal from '../components/Modals/TokenModal';
+import {withNavigation} from 'react-navigation';
 
 const Login = ({navigation}) => {
+  Login.navigationOptions = {
+    title: '78fh7h',
+  };
   const [modal, setModal] = useState(false);
   return (
     <SafeAreaView style={styles.container}>
@@ -50,7 +54,7 @@ const Login = ({navigation}) => {
                 Sign Up
               </Text>
             </TouchableOpacity>
-            <Modals
+            <TokenModal
               modalVisible={modal}
               handleOutside={() => {
                 setModal(false);
@@ -66,7 +70,7 @@ const Login = ({navigation}) => {
   );
 };
 
-export default Login;
+export default withNavigation(Login);
 
 const styles = StyleSheet.create({
   container: {
