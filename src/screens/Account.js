@@ -1,10 +1,25 @@
-import React from 'react';
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  ScrollView,
+  TouchableOpacity,
+  NativeModules,
+  LayoutAnimation,
+} from 'react-native';
 import AllButton from '../components/AllButtons';
 import Avatar from '../../Assets/avatar.svg';
 import Accordion from '../components/Accordion';
 
+const {UIManager} = NativeModules;
+UIManager.setLayoutAnimationEnabledExperimental &&
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+
 const Account = ({navigation}) => {
+  const [wallet, setWallet] = useState(false);
+  const [Support, setSupport] = useState(false);
   return (
     <View style={styles.container}>
       <View style={styles.backdropContainer}>
@@ -15,17 +30,73 @@ const Account = ({navigation}) => {
             <Text style={styles.title}>My Profile</Text>
           </View>
         </ImageBackground>
-      </View>
-      <View style={styles.profileContainer}>
-        <View style={styles.avatar}>
-          <Avatar />
-          <Text style={styles.name}>Chiamaka Nkem-Eze</Text>
-        </View>
-        <View>
-          <Accordion title="Wallet" />
-          <Accordion title="Wallet" />
-          <Accordion title="Wallet" />
-          <Accordion title="Wallet" />
+        <View style={styles.profileContainer}>
+          <View style={styles.avatar}>
+            <Avatar />
+            <Text style={styles.name}>Chiamaka Nkem-Eze</Text>
+          </View>
+          <View style={{paddingTop: '30%'}}>
+            <Accordion
+              title="Wallet"
+              handlePress={() => {
+                LayoutAnimation.easeInEaseOut();
+                setWallet(!wallet);
+                setSupport(false);
+              }}
+              transform={wallet ? 'no' : 'yes'}
+              show="yes"
+            />
+            {/* //wallet container */}
+            <View
+              style={
+                wallet ? styles.detailsContainer : styles.detailsContainerHide
+              }>
+              <View style={styles.walletInfo}>
+                <Text style={{fontSize: 15}}>Balance :</Text>
+                <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                  N350,000.00
+                </Text>
+              </View>
+              <View style={{...styles.walletInfo, marginTop: 20}}>
+                <Text style={{fontSize: 15}}>Voucher :</Text>
+                <Text style={{fontSize: 15, fontWeight: 'bold'}}>N0.00</Text>
+              </View>
+              <View style={{...styles.walletInfo, marginTop: 40}}>
+                <Text style={{fontSize: 15}}>Voucher :</Text>
+                <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                  N350,000.00
+                </Text>
+              </View>
+            </View>
+            <Accordion title="Cancel Transaction" />
+            <Accordion
+              title="Support"
+              handlePress={() => {
+                LayoutAnimation.easeInEaseOut();
+
+                setSupport(!Support);
+                setWallet(false);
+              }}
+              transform={Support ? 'no' : 'yes'}
+              show="yes"
+            />
+            <View
+              style={
+                Support ? styles.supportContainer : styles.detailsContainerHide
+              }>
+              <TouchableOpacity style={styles.supportInfo}>
+                <Text style={styles.supportInfoText}>Report an Issue</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.supportInfo}>
+                <Text style={styles.supportInfoText}>Report Last Ride</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.supportInfo}>
+                <Text style={styles.supportInfoText}>Report Other Ride</Text>
+              </TouchableOpacity>
+            </View>
+            <Accordion title="FAQ" />
+            <Accordion title="Log out" />
+          </View>
         </View>
       </View>
     </View>
@@ -44,7 +115,6 @@ const styles = StyleSheet.create({
     height: '100%',
     flexDirection: 'column',
     // justifyContent: 'flex-end',
-    zIndex: -1,
   },
   avatarContainer: {
     height: '100%',
@@ -56,7 +126,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: 'Roboto',
     fontSize: 25,
-    marginTop: 50,
+    marginTop: 40,
   },
   backdropContainer: {
     width: '100%',
@@ -69,16 +139,15 @@ const styles = StyleSheet.create({
   avatar: {
     justifyContent: 'center',
     alignSelf: 'center',
-    zIndex: 10,
-    position: 'relative',
-    bottom: '13%',
+    zIndex: 1,
+    position: 'absolute',
+    top: '-15%',
   },
   profileContainer: {
     alignSelf: 'center',
-    // borderWidth: 2,
     width: '83%',
     position: 'relative',
-    bottom: '17%',
+    bottom: '45%',
     // height: 300,
     backgroundColor: '#fff',
     borderRadius: 7,
@@ -95,5 +164,30 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     marginVertical: 10,
+  },
+  detailsContainer: {
+    paddingVertical: 10,
+    backgroundColor: '#F8F8F8',
+  },
+  detailsContainerHide: {
+    display: 'none',
+  },
+  walletInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 13,
+  },
+  supportInfoText: {
+    color: '#7E58C2',
+    fontSize: 15,
+  },
+  supportContainer: {
+    backgroundColor: '#F8F8F8',
+  },
+  supportInfo: {
+    paddingVertical: 7,
+    paddingHorizontal: 13,
+    borderWidth: 1,
+    borderColor: '#D1D1D1',
   },
 });
