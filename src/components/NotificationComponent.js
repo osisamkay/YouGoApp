@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, CheckBox} from 'react-native';
 import Envelope from '../../Assets/envelope.svg';
 
 const NotificationComponent = ({label, details, date}) => {
@@ -15,6 +15,7 @@ const NotificationComponent = ({label, details, date}) => {
       <View>
         <Text style={styles.info}>{details}</Text>
       </View>
+      <CheckBox />
     </View>
   );
 };

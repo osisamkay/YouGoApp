@@ -1,18 +1,23 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons/';
+import Logout from 'react-native-vector-icons/AntDesign/';
 
-const Accordion = ({title, handlePress, transform, show}) => {
+const Accordion = ({title, handlePress, transform, show, icon}) => {
   return (
     <TouchableOpacity style={styles.border} onPress={handlePress}>
       <View style={styles.accordionContainer}>
         <Text style={styles.title}>{title}</Text>
         <View style={show === 'yes' ? styles.Icon : styles.IconHide}>
-          <Icon
-            name={transform === 'yes' ? 'chevron-right' : 'chevron-down'}
-            size={23}
-            color="#000"
-          />
+          {icon === 'chevron' ? (
+            <Icon
+              name={transform === 'yes' ? 'chevron-right' : 'chevron-down'}
+              size={23}
+              color="#000"
+            />
+          ) : (
+            <Logout name="logout" size={20} color="#000" />
+          )}
         </View>
       </View>
     </TouchableOpacity>

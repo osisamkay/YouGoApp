@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Envelope from '../../Assets/envelope.svg';
 
-const HistoryComponent = ({label, details, date}) => {
+const HistoryComponent = ({label, details, date, handlePress}) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={handlePress}>
       <View style={styles.labelTop}>
         <View style={styles.label}>
           <Envelope width={20} height={20} />
@@ -15,7 +15,7 @@ const HistoryComponent = ({label, details, date}) => {
       <View>
         <Text style={styles.info}>{details}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

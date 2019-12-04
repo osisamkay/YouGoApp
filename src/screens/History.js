@@ -1,9 +1,16 @@
 import React, {useState} from 'react';
-import {View, Text, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {NotiData} from '../NotificarionData';
-import NotificationComponent from '../components/NotificationComponent';
+import HistoryComponent from '../components/HistoryComponent';
 
-const History = () => {
+const History = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.scrollContainer}>
@@ -11,10 +18,13 @@ const History = () => {
           {NotiData.map(data => {
             return (
               <View key={data.label}>
-                <NotificationComponent
+                <HistoryComponent
                   label={data.label}
                   date={data.date}
                   details={data.details}
+                  handlePress={() => {
+                    navigation.navigate('HistoryDetails');
+                  }}
                 />
               </View>
             );

@@ -12,6 +12,9 @@ import {
 import AllButton from '../components/AllButtons';
 import Avatar from '../../Assets/avatar.svg';
 import Accordion from '../components/Accordion';
+import ReportModals from '../components/Modals/ReportModal';
+import LogoutModals from '../components/Modals/LogoutModal';
+import {NavigationActions} from 'react-navigation';
 
 const {UIManager} = NativeModules;
 UIManager.setLayoutAnimationEnabledExperimental &&
@@ -20,6 +23,13 @@ UIManager.setLayoutAnimationEnabledExperimental &&
 const Account = ({navigation}) => {
   const [wallet, setWallet] = useState(false);
   const [Support, setSupport] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [logoutModals, setLogoutModal] = useState(false);
+
+  const handleLogout = () => {
+    navigation.navigate('Login');
+    setLogoutModal(false);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.backdropContainer}>
@@ -43,6 +53,7 @@ const Account = ({navigation}) => {
                 setWallet(!wallet);
                 setSupport(false);
               }}
+              icon="chevron"
               transform={wallet ? 'no' : 'yes'}
               show="yes"
             />
@@ -77,6 +88,7 @@ const Account = ({navigation}) => {
                 setSupport(!Support);
                 setWallet(false);
               }}
+              icon="chevron"
               transform={Support ? 'no' : 'yes'}
               show="yes"
             />
@@ -84,21 +96,48 @@ const Account = ({navigation}) => {
               style={
                 Support ? styles.supportContainer : styles.detailsContainerHide
               }>
-              <TouchableOpacity style={styles.supportInfo}>
+              <TouchableOpacity
+                style={styles.supportInfo}
+                onPress={() => {
+                  setModal(true);
+                }}>
                 <Text style={styles.supportInfoText}>Report an Issue</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.supportInfo}>
                 <Text style={styles.supportInfoText}>Report Last Ride</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.supportInfo}>
+              <TouchableOpacity
+                style={styles.supportInfo}
+                onPress={() => {
+                  navigation.navigate('History');
+                }}>
                 <Text style={styles.supportInfoText}>Report Other Ride</Text>
               </TouchableOpacity>
             </View>
             <Accordion title="FAQ" />
-            <Accordion title="Log out" />
+            <Accordion
+              title="Log out"
+              show="yes"
+              handlePress={() => {
+                setLogoutModal(!logoutModals);
+              }}
+            />
           </View>
         </View>
       </View>
+      <ReportModals
+        modalVisible={modal}
+        handleOutside={() => {
+          setModal(false);
+        }}
+      />
+      <LogoutModals
+        handleLogout={handleLogout}
+        modalVisible={logoutModals}
+        handleOutside={() => {
+          setLogoutModal(false);
+        }}
+      />
     </View>
   );
 };

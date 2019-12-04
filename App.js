@@ -10,27 +10,46 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import History from './src/screens/History';
 import HomeScreen from './src/screens/Home';
 import Account from './src/screens/Account';
+import HistoryDetails from './src/screens/HistoryDetails';
+import Wallet from './src/screens/Wallet';
+import Upcoming from './src/screens/Upcoming';
+import CalenderView from './src/screens/Calender';
+import Summary from './src/screens/Summary';
 
-const HomeTab = createStackNavigator({
-  Home: {
-    screen: HomeScreen,
-    navigationOptions: {
-      header: null,
+const HomeTab = createStackNavigator(
+  {
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Login: {
+      screen: Login,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    SignUp: {
+      screen: SignUp,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Wallet: {
+      screen: Wallet,
+      navigationOptions: {
+        title: 'My Wallet',
+
+        headerStyle: {
+          backgroundColor: '#673AB7',
+        },
+        headerTintColor: '#fff',
+      },
     },
   },
-  Login: {
-    screen: Login,
-    navigationOptions: {
-      header: null,
-    },
-  },
-  SignUp: {
-    screen: SignUp,
-    navigationOptions: {
-      header: null,
-    },
-  },
-});
+  {headerLayoutPreset: 'center'},
+);
 
 HomeTab.navigationOptions = ({navigation}) => {
   let tabBarVisible = true;
@@ -73,21 +92,68 @@ const HistoryTab = createStackNavigator(
         headerTintColor: '#fff',
       },
     },
+    HistoryDetails: {
+      screen: HistoryDetails,
+      navigationOptions: {
+        title: 'Details',
+
+        headerStyle: {
+          backgroundColor: '#673AB7',
+        },
+        headerTintColor: '#fff',
+      },
+    },
   },
   {headerLayoutPreset: 'center'},
 );
 
-const CarTab = createStackNavigator({
-  CarScreen: {
-    screen: CarsScreen,
-    navigationOptions: {
-      headerStyle: {
-        backgroundColor: 'transparent',
+const CarTab = createStackNavigator(
+  {
+    CarScreen: {
+      screen: CarsScreen,
+      navigationOptions: {
+        headerStyle: {
+          backgroundColor: 'transparent',
+        },
+        headerTintColor: '#673AB7',
       },
-      headerTintColor: '#673AB7',
+    },
+    UpComing: {
+      screen: Upcoming,
+      navigationOptions: {
+        title: 'All Upcoming Rides ',
+        headerStyle: {
+          backgroundColor: '#673AB7',
+        },
+        headerTintColor: '#000',
+        tabBarVisible: true,
+      },
+    },
+    Calender: {
+      screen: CalenderView,
+      navigationOptions: {
+        title: 'Calendar',
+        headerStyle: {
+          backgroundColor: '#673AB7',
+        },
+        headerTintColor: '#fff',
+        tabBarVisible: true,
+      },
+    },
+    Summary: {
+      screen: Summary,
+      navigationOptions: {
+        title: 'Booking Summary',
+        headerStyle: {
+          backgroundColor: '#673AB7',
+        },
+        headerTintColor: '#fff',
+        tabBarVisible: true,
+      },
     },
   },
-});
+  {headerLayoutPreset: 'center'},
+);
 CarTab.navigationOptions = ({navigation}) => {
   let tabBarVisible = true;
   if (navigation.state.index === 0) {

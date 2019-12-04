@@ -40,7 +40,7 @@ const CarsScreen = ({navigation}) => {
 
   // to slide bottom viw uo
   const onpressd = () => {
-    LayoutAnimation.easeInEaseOut();
+    LayoutAnimation.spring();
     setBot(!bot);
   };
   // to show types
@@ -200,7 +200,7 @@ const CarsScreen = ({navigation}) => {
             <AllButton
               title="Next"
               handlePress={() => {
-                navigation.navigate('History');
+                navigation.navigate('Calender');
               }}
             />
           </View>
