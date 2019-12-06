@@ -1,14 +1,24 @@
-import React from 'react';
-import {View, Text, StyleSheet, Alert} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, StyleSheet, Platform, TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Item, Input, Label} from 'native-base';
 import {Button} from 'native-base';
-import AllButton from '../AllButtons';
-import TextComponent from '../TextComponent';
-import TimePicker from 'react-native-simple-time-picker';
 
-const TimeModal = ({modalVisible, handleOutside, handleNext}) => {
+import DateTimePicker from '@react-native-community/datetimepicker';
+
+const TimeModal = ({
+  modalVisible,
+  handleOutside,
+  handleNext,
+  Show,
+  ShowClock,
+  ShowStopClock,
+  startDate,
+  endDate,
+  handleStartTime,
+  getStopTime,
+}) => {
   return (
     <Modal
       isVisible={modalVisible}
@@ -20,7 +30,28 @@ const TimeModal = ({modalVisible, handleOutside, handleNext}) => {
             <Text style={styles.title}>Pick a Time Duration</Text>
           </View>
           <View style={styles.text}>
-            <TimePicker />
+            <View style={styles.Input}>
+              <Item floatingLabel style={{width: '30%'}}>
+                <Label>Start Time</Label>
+                <Input value={startDate} onFocus={ShowClock} />
+              </Item>
+              <Text style={{marginTop: 20, fontWeight: 'bold', fontSize: 17}}>
+                :
+              </Text>
+              <Item floatingLabel style={{width: '30%'}}>
+                <Label>Stop Time</Label>
+                <Input value={endDate} onFocus={ShowStopClock} />
+              </Item>
+            </View>
+            {Show && (
+              <DateTimePicker
+                value={new Date()}
+                mode="time"
+                is24Hour={false}
+                display="spinner"
+                onChange={handleStartTime}
+              />
+            )}
           </View>
         </View>
         <View style={styles.bottomModal}>
@@ -54,14 +85,10 @@ const styles = StyleSheet.create({
     marginTop: 33,
   },
   text: {
-    width: 10,
-    alignSelf: 'center',
-    justifyContent: 'center',
     marginTop: 22,
     marginBottom: 28,
     fontWeight: 'bold',
     fontSize: 17,
-    // width: 200,
   },
   textIn: {
     fontWeight: 'bold',
@@ -98,5 +125,10 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 15,
+  },
+  Input: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 34,
   },
 });

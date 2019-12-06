@@ -6,11 +6,13 @@ import {
   FlatList,
   TouchableOpacity,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import TimeModal from '../components/Modals/TimeModal';
 import AllButton from '../components/AllButtons';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import moment from 'moment';
 
 const CalenderView = ({navigation}) => {
   const [modal, setModal] = useState(false);
@@ -19,8 +21,12 @@ const CalenderView = ({navigation}) => {
   const [serial, setSerial] = useState(false);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
+  const [time, setTime] = useState(null);
+  const [stop, setStop] = useState(null);
+  const [stopTime, setStopTime] = useState(false);
+  const [show, setShow] = useState(false);
 
-  // function to select date atrandom
+  // function to select date at random
   const handleSelect = date => {
     setSelect(date);
     setDates([...dates, date.toString()]);
@@ -42,6 +48,31 @@ const CalenderView = ({navigation}) => {
   const handleNext = () => {
     setModal(false);
     navigation.navigate('Summary');
+  };
+
+  const handleStartTime = (event, d) => {
+    setShow(false);
+    setTime(moment(d).format('HH:mm A'));
+  };
+  const handleStopTime = (event, d) => {
+    setShow(false);
+    setStop(moment(d).format('HH:mm A'));
+  };
+
+  //   handles modal closing
+  const closeModal = () => {
+    setModal(false);
+  };
+
+  //function to show time
+
+  const showClock = () => {
+    setStopTime(false);
+    setShow(true);
+  };
+  const showStopClock = () => {
+    setStopTime(true);
+    setShow(true);
   };
 
   return (
@@ -111,9 +142,13 @@ const CalenderView = ({navigation}) => {
       <TimeModal
         modalVisible={modal}
         handleNext={handleNext}
-        handleOutside={() => {
-          setModal(false);
-        }}
+        Show={show}
+        startDate={time}
+        endDate={stop}
+        handleOutside={closeModal}
+        ShowClock={showClock}
+        ShowStopClock={showStopClock}
+        handleStartTime={!stopTime ? handleStartTime : handleStopTime}
       />
     </SafeAreaView>
   );

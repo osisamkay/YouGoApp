@@ -1,10 +1,21 @@
 import React from 'react';
-import {View, Text, StyleSheet, CheckBox} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {Checkbox} from 'react-native-paper';
 import Envelope from '../../Assets/envelope.svg';
 
-const NotificationComponent = ({label, details, date}) => {
+const NotificationComponent = ({
+  label,
+  details,
+  date,
+  checked,
+  handleCheck,
+  Show,
+  handleLongPress,
+  value,
+}) => {
+  console.log(value);
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onLongPress={handleLongPress}>
       <View style={styles.labelTop}>
         <View style={styles.label}>
           <Envelope width={20} height={20} />
@@ -12,11 +23,18 @@ const NotificationComponent = ({label, details, date}) => {
         </View>
         <Text style={styles.date}>{date}</Text>
       </View>
-      <View>
+      <View style={{flexDirection: 'row'}}>
         <Text style={styles.info}>{details}</Text>
+        <View style={Show ? {display: 'flex'} : {display: 'none'}}>
+          <Checkbox
+            status={checked.includes(value) ? 'checked' : 'unchecked'}
+            onPress={handleCheck}
+            color="#673ab7"
+            value={value}
+          />
+        </View>
       </View>
-      <CheckBox />
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -48,6 +66,7 @@ const styles = StyleSheet.create({
     width: '85%',
     height: 35,
     color: '#8c8c8c',
+    marginLeft: 30,
   },
   date: {
     color: '#8A8A8A',
