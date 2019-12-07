@@ -1,10 +1,5 @@
 import React, {useState} from 'react';
-import {
-  View,
-  SafeAreaView,
-  StyleSheet,
-  FlatList,
-} from 'react-native';
+import {View, SafeAreaView, StyleSheet, FlatList} from 'react-native';
 import {NotiData} from '../NotificarionData';
 import NotificationComponent from '../components/NotificationComponent';
 import BottomTab from '../components/FooterTab';
@@ -15,9 +10,9 @@ const Notifications = () => {
   const [show, setShow] = useState(false);
   const [checked, setChecked] = useState([]);
 
-  // const handleCheck = e => {
-  //   setStatus(!status);
-  // };
+  const handleCheck = e => {
+    setStatus(!status);
+  };
 
   //checked value
   const press = a => {
@@ -27,7 +22,6 @@ const Notifications = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.scrollContainer}>
         <FlatList
-
           showsVerticalScrollIndicator={false}
           data={NotiData}
           keyExtractor={item => item.label}
@@ -40,7 +34,7 @@ const Notifications = () => {
                 details={item.details}
                 checked={checked}
                 Show={show}
-                handleLongPress={e => {
+                handleLongPress={() => {
                   setShow(!show);
                 }}
                 value={item.label}

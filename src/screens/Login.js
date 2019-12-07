@@ -29,7 +29,7 @@ const Login = ({navigation}) => {
           </View>
           <View style={styles.form}>
             <View style={{marginBottom: 46}}>
-              <TextComponent label="Email" />
+              <TextComponent label="Phone Number/Email" />
             </View>
             <View style={{marginBottom: 19}}>
               <TextComponent label="Password" />

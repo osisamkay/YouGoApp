@@ -21,7 +21,7 @@ export default TextComponent;
 
 const styles = StyleSheet.create({
   label: {
-    color: '#000000',
+    color: 'rgba(109, 109, 109, 0.8)',
     paddingVertical: 10,
     fontSize: 15,
   },

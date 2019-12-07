@@ -13,7 +13,7 @@ const NotificationComponent = ({
   handleLongPress,
   value,
 }) => {
-  console.log(value);
+  console.log(checked);
   return (
     <TouchableOpacity style={styles.container} onLongPress={handleLongPress}>
       <View style={styles.labelTop}>

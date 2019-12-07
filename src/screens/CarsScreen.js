@@ -31,34 +31,35 @@ const CarsScreen = ({navigation}) => {
   const handleRef = useRef();
   useEffect(() => handleRef.current && handleRef.current.focus());
 
-  const bounce = () =>
-    this.view
-      .bounce(800)
-      .then(endState =>
-        console.log(endState.finished ? 'bounce finished' : 'bounce cancelled'),
-      );
-
   // to slide bottom viw uo
   const onpressd = () => {
     LayoutAnimation.spring();
     setBot(!bot);
+    !bot ? setType(false) : setType(true);
+    bot ? setBrand(true) : false;
   };
   // to show types
   const handleType = () => {
     LayoutAnimation.easeInEaseOut();
+    setBot(true);
     setType(!type);
     setBrand(true);
   };
   // to show Brands
   const handleBrand = () => {
     LayoutAnimation.easeInEaseOut();
-    setBrand(!brand);
-    setType(false);
+    if (!bot) {
+      setBot(true);
+      setType(!type);
+    } else {
+      setBrand(!brand);
+      setType(true);
+    }
   };
 
   return (
     <View style={styles.container}>
-      <View style={bot ? {height: '50%'} : {height: '20%'}}>
+      <View style={!bot ? {height: '50%'} : {height: '20%'}}>
         <Text style={styles.title}>Sedans</Text>
         <View style={styles.imagecontainer}>
           <Image source={require('../../Assets/blackcar.png')} />
@@ -88,9 +89,9 @@ const CarsScreen = ({navigation}) => {
         end={{x: 0, y: 0.8698}}
         colors={['#673AB7', '#370B87']}
         style={
-          bot
-            ? {...styles.bottom, height: height / 2.65}
-            : {...styles.bottom, height: height * 0.68}
+          !bot
+            ? {...styles.bottom, height: height / 4.65}
+            : {...styles.bottom, height: height * 0.6}
         }>
         <TouchableOpacity
           onPress={onpressd}
@@ -100,7 +101,7 @@ const CarsScreen = ({navigation}) => {
             color="#fff"
             size={25}
             style={
-              bot
+              !bot
                 ? {textAlign: 'center'}
                 : {textAlign: 'center', transform: [{rotate: '180deg'}]}
             }
@@ -118,7 +119,7 @@ const CarsScreen = ({navigation}) => {
                     size={20}
                     color="#fff"
                     style={
-                      type
+                      !type
                         ? {transform: [{rotate: '90deg'}]}
                         : {transform: [{rotate: '0deg'}]}
                     }
@@ -128,14 +129,14 @@ const CarsScreen = ({navigation}) => {
               </View>
               <View
                 style={
-                  !type ? styles.carTypeContainer : styles.carTypeContainershow
+                  type ? styles.carTypeContainer : styles.carTypeContainershow
                 }>
                 <ScrollView
                   contentContainerStyle={styles.scroll}
                   showsVerticalScrollIndicator={false}
-                  scrollEnabled={bot ? false : true}
+                  scrollEnabled={!bot ? false : true}
                   style={
-                    bot
+                    !bot
                       ? {...styles.carlistone, height: 133, overflow: 'hidden'}
                       : {...styles.carlistone, height: 267, overflow: 'scroll'}
                   }>
@@ -175,13 +176,17 @@ const CarsScreen = ({navigation}) => {
                 <ScrollView
                   contentContainerStyle={styles.scroll}
                   showsVerticalScrollIndicator={false}
-                  scrollEnabled={bot ? false : true}
+                  scrollEnabled={!bot ? false : true}
                   style={
                     bot
-                      ? {...styles.carlistone, height: 133, overflow: 'hidden'}
+                      ? {
+                          ...styles.carlistone,
+                          height: 320,
+                          overflow: 'hidden',
+                        }
                       : {
                           ...styles.carlistone,
-                          height: 410,
+                          height: 133,
                           overflow: 'scroll',
                         }
                   }>
@@ -263,8 +268,8 @@ const styles = StyleSheet.create({
     marginTop: 25,
   },
   bottom: {
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    // borderTopLeftRadius: 30,
+    // borderTopRightRadius: 30,
     paddingHorizontal: 17,
     paddingVertical: 11,
   },
