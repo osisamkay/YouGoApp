@@ -7,9 +7,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Car from '../../Assets/prado';
-import {TouchableRipple} from 'react-native-paper';
+import {Rating, AirbnbRating} from 'react-native-ratings';
 
 const HistoryDetails = () => {
+  const ratingCompleted = rating => {
+    console.log('Rating is: ' + rating);
+  };
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container}>
@@ -66,7 +69,16 @@ const HistoryDetails = () => {
             <Text style={styles.helpText}>Ride did not happen</Text>
           </TouchableOpacity>
           <TouchableOpacity>
-            <Text style={styles.helpText}>Resend Receipt</Text>
+            <View style={styles.rating}>
+              <Text style={styles.ratingTxt}>Resend Receipt</Text>
+              <Rating
+                onFinishRating={ratingCompleted}
+                startingValue={0}
+                ratingCount={5}
+                imageSize={25}
+                fraction={2}
+              />
+            </View>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -156,5 +168,18 @@ const styles = StyleSheet.create({
     borderBottomColor: '#E0E0E0',
     fontSize: 15,
     fontWeight: 'bold',
+  },
+  ratingTxt: {
+    paddingVertical: 9,
+    borderBottomColor: '#E0E0E0',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  rating: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });

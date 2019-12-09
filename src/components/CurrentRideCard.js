@@ -4,12 +4,12 @@ import {Card, CardItem} from 'native-base';
 import Call from '../../Assets/call.svg';
 import Topup from '../../Assets/topup.svg';
 
-const CurrentRideCard = () => {
+const CurrentRideCard = ({makeCall}) => {
   return (
     <View style={styles.container}>
       <Card style={styles.card}>
         <CardItem>
-          <TouchableOpacity style={styles.center}>
+          <TouchableOpacity style={styles.center} onPress={makeCall}>
             <Call />
             <Text style={styles.action}>Call Driver</Text>
           </TouchableOpacity>

@@ -6,7 +6,8 @@ import {
   ImageBackground,
   TouchableOpacity,
   FlatList,
-  ScrollView,
+  Linking,
+  Platform,
 } from 'react-native';
 import AllButton from '../components/AllButtons';
 import InitialHomeScreen from './InitialHomeScreen';
@@ -16,6 +17,17 @@ import TopDeals from '../components/TopDeals';
 import {Deals} from '../DealsData';
 
 const HomeScreen = ({navigation}) => {
+  const makeCall = () => {
+    let phoneNumber = '';
+
+    if (Platform.OS === 'android') {
+      phoneNumber = `tel:${1234567890}`;
+    } else {
+      phoneNumber = `telprompt:${1234567890}`;
+    }
+
+    Linking.openURL(phoneNumber);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.backdrop}>
@@ -50,7 +62,7 @@ const HomeScreen = ({navigation}) => {
             <Text style={styles.viewText}>View All</Text>
           </TouchableOpacity>
         </View>
-        <CurrentRideCard />
+        <CurrentRideCard makeCall={makeCall} />
       </View>
       <View>
         <View style={styles.view}>
