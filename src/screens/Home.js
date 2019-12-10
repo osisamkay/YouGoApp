@@ -8,6 +8,7 @@ import {
   FlatList,
   Linking,
   Platform,
+  StatusBar,
 } from 'react-native';
 import AllButton from '../components/AllButtons';
 import InitialHomeScreen from './InitialHomeScreen';
@@ -30,6 +31,7 @@ const HomeScreen = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#522E92" />
       <View style={styles.backdrop}>
         <View style={styles.shadow}>
           <ImageBackground

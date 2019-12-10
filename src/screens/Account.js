@@ -43,9 +43,12 @@ const Account = ({navigation}) => {
           </View>
         </ImageBackground>
         <View style={styles.profileContainer}>
+          <Text style={styles.edit}>...</Text>
           <View style={styles.avatar}>
             <Avatar />
             <Text style={styles.name}>Chiamaka Nkem-Eze</Text>
+            <Text style={styles.dets}>08123456789</Text>
+            <Text style={styles.dets}>amakaeze@yougo.com</Text>
           </View>
           <View style={{paddingTop: '30%'}}>
             <Accordion
@@ -70,12 +73,12 @@ const Account = ({navigation}) => {
                   N350,000.00
                 </Text>
               </View>
-              <View style={{...styles.walletInfo, marginTop: 20}}>
+              <View style={{...styles.walletInfo, marginTop: 15}}>
                 <Text style={{fontSize: 15}}>Voucher :</Text>
                 <Text style={{fontSize: 15, fontWeight: 'bold'}}>N0.00</Text>
               </View>
-              <View style={{...styles.walletInfo, marginTop: 40}}>
-                <Text style={{fontSize: 15}}>Voucher :</Text>
+              <View style={{...styles.walletInfo, marginTop: 15}}>
+                <Text style={{fontSize: 15}}>Total :</Text>
                 <Text style={{fontSize: 15, fontWeight: 'bold'}}>
                   N350,000.00
                 </Text>
@@ -166,7 +169,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#fff',
     fontFamily: 'Roboto',
-    fontSize: 25,
+    fontSize: 17,
     marginTop: 40,
   },
   backdropContainer: {
@@ -188,8 +191,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '83%',
     position: 'relative',
-    bottom: '45%',
-    // height: 300,
+    bottom: '48%',
+    height: 'auto',
     backgroundColor: '#fff',
     borderRadius: 7,
     shadowColor: '#000',
@@ -204,10 +207,10 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 15,
     fontWeight: 'bold',
-    marginVertical: 10,
+    marginTop: 5,
   },
   detailsContainer: {
-    paddingVertical: 10,
+    paddingVertical: 5,
     backgroundColor: '#F8F8F8',
   },
   detailsContainerHide: {
@@ -230,5 +233,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 13,
     borderWidth: 1,
     borderColor: '#D1D1D1',
+  },
+  dets: {
+    fontSize: 13,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#737373',
+  },
+  edit: {
+    alignSelf: 'flex-end',
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginRight: 13,
   },
 });

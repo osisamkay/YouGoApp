@@ -111,12 +111,28 @@ const CarTab = createStackNavigator(
   {
     CarScreen: {
       screen: CarsScreen,
-      navigationOptions: {
+      navigationOptions: ({navigation}) => ({
         headerStyle: {
           backgroundColor: 'transparent',
         },
-        headerTintColor: '#673AB7',
-      },
+        headerTintColor: '#000',
+        headerLeft: () => (
+          // <Button
+          //   onPress={() => alert('This is a button!')}
+          //   title="Info"
+          //   color="#000"
+          // />
+          <Ionicons
+            name="ios-arrow-round-back"
+            size={40}
+            color="black"
+            onPress={() => {
+              navigation.navigate('Home');
+            }}
+            style={{padding: 17, fontWeight: 'bold'}}
+          />
+        ),
+      }),
     },
     UpComing: {
       screen: Upcoming,
@@ -125,7 +141,7 @@ const CarTab = createStackNavigator(
         headerStyle: {
           backgroundColor: '#673AB7',
         },
-        headerTintColor: '#000',
+        headerTintColor: '#fff',
         tabBarVisible: true,
       },
     },

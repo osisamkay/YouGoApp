@@ -13,7 +13,9 @@ const HistoryComponent = ({label, details, date, handlePress}) => {
         <Text style={styles.date}>{date}</Text>
       </View>
       <View>
-        <Text style={styles.info}>{details}</Text>
+        <Text style={styles.info} numberOfLines={2} ellipsizeMode="tail">
+          {details}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -45,7 +47,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     alignSelf: 'center',
     width: '85%',
-    height: 35,
     color: '#8c8c8c',
   },
   date: {

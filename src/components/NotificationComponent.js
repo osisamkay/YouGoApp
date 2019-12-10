@@ -24,7 +24,9 @@ const NotificationComponent = ({
         <Text style={styles.date}>{date}</Text>
       </View>
       <View style={{flexDirection: 'row'}}>
-        <Text style={styles.info}>{details}</Text>
+        <Text numberOfLines={2} style={styles.info}>
+          {details}
+        </Text>
         <View style={Show ? {display: 'flex'} : {display: 'none'}}>
           <Checkbox
             status={checked.includes(value) ? 'checked' : 'unchecked'}
@@ -64,7 +66,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     alignSelf: 'center',
     width: '85%',
-    height: 35,
     color: '#8c8c8c',
     marginLeft: 30,
   },
