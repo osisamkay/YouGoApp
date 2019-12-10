@@ -25,10 +25,12 @@ const CalenderView = ({navigation}) => {
   const [stop, setStop] = useState(null);
   const [stopTime, setStopTime] = useState(false);
   const [show, setShow] = useState(false);
+  const [info, setInfo] = useState(false);
 
   // function to select date at random
   const handleSelect = date => {
     setSelect(date);
+    setInfo(true);
     setDates([...dates, date.toString()]);
   };
 
@@ -134,6 +136,7 @@ const CalenderView = ({navigation}) => {
       <View style={styles.btn}>
         <AllButton
           title="Continue"
+          status={info}
           handlePress={() => {
             setModal(true);
           }}

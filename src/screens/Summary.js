@@ -67,7 +67,7 @@ const Summary = () => {
           <Text style={styles.voucherTxt}>N30,000.00</Text>
         </View>
         <View style={styles.actnBtn}>
-          <AllButton title="Continue to Payment" />
+          <AllButton title="Continue to Payment" status={true} />
         </View>
       </View>
     </SafeAreaView>

@@ -8,9 +8,12 @@ import {
 
 // const {width} = Dimensions.get('screen'); // to get screen dimension (width and height)
 
-const AllButton = ({title, handlePress}) => {
+const AllButton = ({title, handlePress, status}) => {
   return (
-    <Button style={styles.button} onPress={handlePress}>
+    <Button
+      style={styles.button}
+      disabled={status ? false : true}
+      onPress={handlePress}>
       <Text style={styles.text}>{title}</Text>
     </Button>
   );

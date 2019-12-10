@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   NativeModules,
   LayoutAnimation,
+  StatusBar,
 } from 'react-native';
 import AllButton from '../components/AllButtons';
 import Avatar from '../../Assets/avatar.svg';
@@ -32,6 +33,7 @@ const Account = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#522E92" />
       <View style={styles.backdropContainer}>
         <ImageBackground
           source={require('../../Assets/ellipse.png')}

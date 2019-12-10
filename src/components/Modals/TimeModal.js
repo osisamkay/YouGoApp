@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, Platform, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import Modal from 'react-native-modal';
-import Icon from 'react-native-vector-icons/AntDesign';
 import {Item, Input, Label} from 'native-base';
 import {Button} from 'native-base';
 

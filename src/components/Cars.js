@@ -1,9 +1,12 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 
-const Cars = ({name, image}) => {
+const Cars = ({name, image, handlePress}) => {
   return (
-    <TouchableOpacity value={name} style={styles.container}>
+    <TouchableOpacity
+      value={name}
+      style={styles.container}
+      onPress={handlePress}>
       <Image style={styles.image} source={require('../../Assets/redcar.png')} />
       <Text style={styles.text}>{name}</Text>
     </TouchableOpacity>

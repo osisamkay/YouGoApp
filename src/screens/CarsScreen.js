@@ -17,6 +17,7 @@ import {CarData} from '../CarData';
 import LinearGradient from 'react-native-linear-gradient';
 import AllButton from '../components/AllButtons';
 import * as Animatable from 'react-native-animatable';
+import YearsModal from '../components/Modals/Years';
 const {height} = Dimensions.get('screen');
 
 const {UIManager} = NativeModules;
@@ -27,9 +28,11 @@ const CarsScreen = ({navigation}) => {
   const [type, setType] = useState(false);
   const [bot, setBot] = useState(true);
   const [brand, setBrand] = useState(true);
-
-  const handleRef = useRef();
-  useEffect(() => handleRef.current && handleRef.current.focus());
+  const [carType, setCarType] = useState(' ');
+  const [carBrand, setCarBrand] = useState(' ');
+  const [year, setYear] = useState([]);
+  const [yearModal, setYearModal] = useState(false);
+  const [info, setInfo] = useState(false);
 
   // to slide bottom viw uo
   const onpressd = () => {
@@ -57,6 +60,26 @@ const CarsScreen = ({navigation}) => {
     }
   };
 
+  // get car type on click
+  const handlePress = type => {
+    setCarType(type);
+    setType(true);
+    setBrand(false);
+  };
+  // get car type on click
+  const handleBrandSelect = type => {
+    setCarBrand(type);
+    setType(true);
+    setYearModal(true);
+  };
+
+  const handleDone = () => {
+    setBot(false);
+    setYearModal(false);
+    setBrand(true);
+    setInfo(true);
+  };
+
   return (
     <View style={styles.container}>
       <View style={!bot ? {height: '50%'} : {height: '20%'}}>
@@ -64,23 +87,25 @@ const CarsScreen = ({navigation}) => {
         <View style={styles.imagecontainer}>
           <Image source={require('../../Assets/blackcar.png')} />
         </View>
-        <View style={styles.topview}>
-          <Text style={styles.description}>Description</Text>
-          <Text style={styles.price}>Min: #22500/5hr</Text>
-        </View>
-        <View style={styles.topbottomview}>
-          <View>
-            <Text style={styles.description}>Four Doors</Text>
-            <Text style={styles.description}>Slide</Text>
+        <View style={!info ? styles.hide : styles.show}>
+          <View style={styles.topview}>
+            <Text style={styles.description}>Description</Text>
+            <Text style={styles.price}>Min: #22500/5hr</Text>
           </View>
-          {/* <Text style={styles.price}>Min: #22500/5hr</Text> */}
-        </View>
-        <View>
-          <Text style={styles.topbottomviewText}>
-            sjdhas hdja shd asjd ashd asjd has djhas dhjas djas dhasd
-            sadhjasd,asbdasbdjasd asnjd ahs dhjas djhas dhja sjdhas hdja shd
-            asjd ashd asjd has djhas dhjas djas dhasd sadhjasd
-          </Text>
+          <View style={styles.topbottomview}>
+            <View>
+              <Text style={styles.description}>Four Doors</Text>
+              <Text style={styles.description}>Slide</Text>
+            </View>
+            <Text style={styles.price}>Year: {year}</Text>
+          </View>
+          <View>
+            <Text style={styles.topbottomviewText}>
+              sjdhas hdja shd asjd ashd asjd has djhas dhjas djas dhasd
+              sadhjasd,asbdasbdjasd asnjd ahs dhjas djhas dhja sjdhas hdja shd
+              asjd ashd asjd has djhas dhjas djas dhasd sadhjasd
+            </Text>
+          </View>
         </View>
       </View>
 
@@ -125,6 +150,7 @@ const CarsScreen = ({navigation}) => {
                     }
                   />
                   <Text style={styles.pickViewOneText}>Choose Type</Text>
+                  <Text style={styles.selected}>{carType}</Text>
                 </TouchableOpacity>
               </View>
               <View
@@ -143,7 +169,12 @@ const CarsScreen = ({navigation}) => {
                   {CarData.map(data => {
                     return (
                       <TouchableOpacity key={data.id}>
-                        <Cars name={data.carType} />
+                        <Cars
+                          name={data.carType}
+                          handlePress={() => {
+                            handlePress(data.carType);
+                          }}
+                        />
                       </TouchableOpacity>
                     );
                   })}
@@ -167,6 +198,7 @@ const CarsScreen = ({navigation}) => {
                     }
                   />
                   <Text style={styles.pickViewOneText}>Choose Brand</Text>
+                  <Text style={styles.selected}>{carBrand}</Text>
                 </TouchableOpacity>
               </View>
               <View
@@ -193,7 +225,12 @@ const CarsScreen = ({navigation}) => {
                   {CarData.map(data => {
                     return (
                       <View key={data.id}>
-                        <Cars name={data.carType} />
+                        <Cars
+                          name={data.carType}
+                          handlePress={() => {
+                            handleBrandSelect(data.carType);
+                          }}
+                        />
                       </View>
                     );
                   })}
@@ -204,6 +241,7 @@ const CarsScreen = ({navigation}) => {
           <View>
             <AllButton
               title="Next"
+              status={info}
               handlePress={() => {
                 navigation.navigate('Calender');
               }}
@@ -211,6 +249,14 @@ const CarsScreen = ({navigation}) => {
           </View>
         </View>
       </LinearGradient>
+      <YearsModal
+        value={year}
+        modalVisible={yearModal}
+        selected={value => {
+          setYear(value);
+        }}
+        handleDone={handleDone}
+      />
     </View>
   );
 };
@@ -309,5 +355,18 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
+  },
+  selected: {
+    marginLeft: 'auto',
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: 'bold',
+    fontFamily: 'Roboto',
+  },
+  hide: {
+    display: 'none',
+  },
+  show: {
+    display: 'flex',
   },
 });

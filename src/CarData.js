@@ -4,7 +4,7 @@ export const CarData = [
   {id: 'gudhswhein', carType: 'MPV', image: '../Assets/redcar.png'},
   {id: 'uygfubiheh', carType: 'SUV', image: '../Assets/redcar.png'},
   {id: 'gfuhbeuue', carType: 'Crossover', image: '../Assets/redcar.png'},
-  {id: '7hfue7fh7dg', carType: ' Coupe', image: '../Assets/redcar.png'},
+  {id: '7hfue7fh7dg', carType: 'Coupe', image: '../Assets/redcar.png'},
   {id: 'geysudusduhd', carType: 'Convertible', image: '../Assets/redcar.png'},
   {id: 'ttbrr', carType: 'sedan', image: '../Assets/redcar.png'},
   {id: 'uihsu', carType: 'Hatchback', image: '../Assets/redcar.png'},

@@ -104,7 +104,7 @@ const HistoryTab = createStackNavigator(
       },
     },
   },
-  {headerLayoutPreset: 'center'},
+  {headerLayoutPreset: 'center', initialRouteName: 'History'},
 );
 
 const CarTab = createStackNavigator(
@@ -152,7 +152,7 @@ const CarTab = createStackNavigator(
       },
     },
   },
-  {headerLayoutPreset: 'center'},
+  {headerLayoutPreset: 'center', initialRouteName: 'CarScreen'},
 );
 CarTab.navigationOptions = ({navigation}) => {
   let tabBarVisible = true;
