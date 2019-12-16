@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   card: {
-    marginHorizontal: 17,
+    paddingHorizontal: 17,
     marginTop: 17,
   },
 });

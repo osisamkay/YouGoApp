@@ -34,6 +34,7 @@ const Account = ({navigation}) => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#522E92" />
+
       <View style={styles.backdropContainer}>
         <ImageBackground
           source={require('../../Assets/ellipse.png')}
@@ -50,83 +51,89 @@ const Account = ({navigation}) => {
             <Text style={styles.dets}>08123456789</Text>
             <Text style={styles.dets}>amakaeze@yougo.com</Text>
           </View>
-          <View style={{paddingTop: '30%'}}>
-            <Accordion
-              title="Wallet"
-              handlePress={() => {
-                LayoutAnimation.easeInEaseOut();
-                setWallet(!wallet);
-                setSupport(false);
-              }}
-              icon="chevron"
-              transform={wallet ? 'no' : 'yes'}
-              show="yes"
-            />
-            {/* //wallet container */}
-            <View
-              style={
-                wallet ? styles.detailsContainer : styles.detailsContainerHide
-              }>
-              <View style={styles.walletInfo}>
-                <Text style={{fontSize: 15}}>Balance :</Text>
-                <Text style={{fontSize: 15, fontWeight: 'bold'}}>
-                  N350,000.00
-                </Text>
+          <View style={{height: 450, paddingTop: '34%'}}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{height: 450}}>
+              <Accordion
+                title="Wallet"
+                handlePress={() => {
+                  LayoutAnimation.easeInEaseOut();
+                  setWallet(!wallet);
+                  setSupport(false);
+                }}
+                icon="chevron"
+                transform={wallet ? 'no' : 'yes'}
+                show="yes"
+              />
+              {/* //wallet container */}
+              <View
+                style={
+                  wallet ? styles.detailsContainer : styles.detailsContainerHide
+                }>
+                <View style={styles.walletInfo}>
+                  <Text style={{fontSize: 15}}>Balance :</Text>
+                  <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                    N350,000.00
+                  </Text>
+                </View>
+                <View style={{...styles.walletInfo, marginTop: 15}}>
+                  <Text style={{fontSize: 15}}>Voucher :</Text>
+                  <Text style={{fontSize: 15, fontWeight: 'bold'}}>N0.00</Text>
+                </View>
+                <View style={{...styles.walletInfo, marginTop: 15}}>
+                  <Text style={{fontSize: 15}}>Total :</Text>
+                  <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                    N350,000.00
+                  </Text>
+                </View>
               </View>
-              <View style={{...styles.walletInfo, marginTop: 15}}>
-                <Text style={{fontSize: 15}}>Voucher :</Text>
-                <Text style={{fontSize: 15, fontWeight: 'bold'}}>N0.00</Text>
-              </View>
-              <View style={{...styles.walletInfo, marginTop: 15}}>
-                <Text style={{fontSize: 15}}>Total :</Text>
-                <Text style={{fontSize: 15, fontWeight: 'bold'}}>
-                  N350,000.00
-                </Text>
-              </View>
-            </View>
-            <Accordion title="Cancel Transaction" />
-            <Accordion
-              title="Support"
-              handlePress={() => {
-                LayoutAnimation.easeInEaseOut();
+              <Accordion title="Cancel Transaction" />
+              <Accordion
+                title="Support"
+                handlePress={() => {
+                  LayoutAnimation.easeInEaseOut();
 
-                setSupport(!Support);
-                setWallet(false);
-              }}
-              icon="chevron"
-              transform={Support ? 'no' : 'yes'}
-              show="yes"
-            />
-            <View
-              style={
-                Support ? styles.supportContainer : styles.detailsContainerHide
-              }>
-              <TouchableOpacity
-                style={styles.supportInfo}
-                onPress={() => {
-                  setModal(true);
-                }}>
-                <Text style={styles.supportInfoText}>Report an Issue</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.supportInfo}>
-                <Text style={styles.supportInfoText}>Report Last Ride</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.supportInfo}
-                onPress={() => {
-                  navigation.navigate('History');
-                }}>
-                <Text style={styles.supportInfoText}>Report Other Ride</Text>
-              </TouchableOpacity>
-            </View>
-            <Accordion title="FAQ" />
-            <Accordion
-              title="Log out"
-              show="yes"
-              handlePress={() => {
-                setLogoutModal(!logoutModals);
-              }}
-            />
+                  setSupport(!Support);
+                  setWallet(false);
+                }}
+                icon="chevron"
+                transform={Support ? 'no' : 'yes'}
+                show="yes"
+              />
+              <View
+                style={
+                  Support
+                    ? styles.supportContainer
+                    : styles.detailsContainerHide
+                }>
+                <TouchableOpacity
+                  style={styles.supportInfo}
+                  onPress={() => {
+                    setModal(true);
+                  }}>
+                  <Text style={styles.supportInfoText}>Report an Issue</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.supportInfo}>
+                  <Text style={styles.supportInfoText}>Report Last Ride</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.supportInfo}
+                  onPress={() => {
+                    navigation.navigate('History');
+                  }}>
+                  <Text style={styles.supportInfoText}>Report Other Ride</Text>
+                </TouchableOpacity>
+              </View>
+              <Accordion title="FAQ" />
+              <Accordion
+                title="Log out"
+                show="yes"
+                handlePress={() => {
+                  setLogoutModal(!logoutModals);
+                }}
+              />
+            </ScrollView>
           </View>
         </View>
       </View>
@@ -170,7 +177,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: 'Roboto',
     fontSize: 17,
-    marginTop: 40,
+    marginTop: 15,
   },
   backdropContainer: {
     width: '100%',
@@ -192,7 +199,6 @@ const styles = StyleSheet.create({
     width: '83%',
     position: 'relative',
     bottom: '48%',
-    height: 'auto',
     backgroundColor: '#fff',
     borderRadius: 7,
     shadowColor: '#000',

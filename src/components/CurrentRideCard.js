@@ -4,7 +4,7 @@ import {Card, CardItem} from 'native-base';
 import Call from '../../Assets/call.svg';
 import Topup from '../../Assets/topup.svg';
 
-const CurrentRideCard = ({makeCall}) => {
+const CurrentRideCard = ({makeCall, TopUp}) => {
   return (
     <View style={styles.container}>
       <Card style={styles.card}>
@@ -24,7 +24,7 @@ const CurrentRideCard = ({makeCall}) => {
           </View>
         </View>
         <CardItem>
-          <TouchableOpacity style={styles.center}>
+          <TouchableOpacity style={styles.center} onPress={TopUp}>
             <Topup />
             <Text style={styles.action}>Top Up</Text>
           </TouchableOpacity>
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   },
   time: {
     fontSize: 17,
-    fontWeight: 'bold',
+    fontWeight: '600',
     fontFamily: 'Roboto',
   },
   timeLeft: {

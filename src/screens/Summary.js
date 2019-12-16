@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
+import {View, Text, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
 import {Card, CardItem, Button} from 'native-base';
 import Car from '../../Assets/summary.svg';
 import AllButton from '../components/AllButtons';
@@ -7,7 +7,9 @@ import AllButton from '../components/AllButtons';
 const Summary = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.cardContainer}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.cardContainer}>
         <Card>
           <CardItem style={styles.car}>
             <Car />
@@ -51,7 +53,7 @@ const Summary = () => {
             </View>
           </CardItem>
         </Card>
-      </View>
+      </ScrollView>
       <View style={styles.bottom}>
         <View style={styles.voucher}>
           <View>

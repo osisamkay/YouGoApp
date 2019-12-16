@@ -30,15 +30,15 @@ const TimeModal = ({
           </View>
           <View style={styles.text}>
             <View style={styles.Input}>
-              <Item floatingLabel style={{width: '30%'}}>
-                <Label>Start Time</Label>
+              <Item floatingLabel style={{width: '40%'}}>
+                <Label style={{fontSize: 15}}>Start Time</Label>
                 <Input value={startDate} onFocus={ShowClock} />
               </Item>
               <Text style={{marginTop: 20, fontWeight: 'bold', fontSize: 17}}>
                 :
               </Text>
-              <Item floatingLabel style={{width: '30%'}}>
-                <Label>Stop Time</Label>
+              <Item floatingLabel style={{width: '40%'}}>
+                <Label style={{fontSize: 15}}>Stop Time</Label>
                 <Input value={endDate} onFocus={ShowStopClock} />
               </Item>
             </View>

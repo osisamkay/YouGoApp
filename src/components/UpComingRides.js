@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Benz from '../../Assets/benz.svg';
 import {Card, CardItem, Button} from 'native-base';
 
@@ -7,8 +7,8 @@ const UpComingRides = () => {
   return (
     <Card style={styles.cardContainer}>
       <CardItem style={styles.cardet}>
-        <Benz />
-        <Text style={styles.carName}>Mercedes Benz 4Matic</Text>
+        <Image source={require('../../Assets/toyo.png')} resizeMode="contain" />
+        <Text style={styles.carName}>Toyota Corolla 2010</Text>
       </CardItem>
       <CardItem style={styles.cardets}>
         <View>

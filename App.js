@@ -15,6 +15,13 @@ import Wallet from './src/screens/Wallet';
 import Upcoming from './src/screens/Upcoming';
 import CalenderView from './src/screens/Calender';
 import Summary from './src/screens/Summary';
+import AllTopRides from './src/screens/AllTopRides';
+import {createStore, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
+import {rootReducer} from './src/reducer/rootReducer';
+import createSagaMiddleware from 'redux-saga';
+import saga from './src/saga/rootSaga';
+import {Root} from 'native-base';
 
 const HomeTab = createStackNavigator(
   {
@@ -52,6 +59,7 @@ const HomeTab = createStackNavigator(
 );
 
 HomeTab.navigationOptions = ({navigation}) => {
+  console.log(navigation);
   let tabBarVisible = true;
   if (navigation.state.index > 0) {
     tabBarVisible = false;
@@ -74,6 +82,17 @@ const NoticeTab = createStackNavigator(
           // height: 90,
         },
         headerTintColor: '#fff',
+      },
+    },
+    TopDeals: {
+      screen: AllTopRides,
+      navigationOptions: {
+        title: 'All Top Deals ',
+        headerStyle: {
+          backgroundColor: '#673AB7',
+        },
+        headerTintColor: '#fff',
+        tabBarVisible: true,
       },
     },
   },
@@ -171,8 +190,9 @@ const CarTab = createStackNavigator(
   {headerLayoutPreset: 'center', initialRouteName: 'CarScreen'},
 );
 CarTab.navigationOptions = ({navigation}) => {
+  // console.log(object);
   let tabBarVisible = true;
-  if (navigation.state.index === 0) {
+  if (navigation.state.index === 0 || navigation.state.index !== 0) {
     tabBarVisible = false;
   }
 
@@ -238,4 +258,16 @@ const TabNavigator = createBottomTabNavigator(
 );
 const App = createAppContainer(TabNavigator);
 
-export default App;
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+sagaMiddleware.run(saga);
+export default () => {
+  return (
+    <Provider store={store}>
+      <Root>
+        <App />
+      </Root>
+    </Provider>
+  );
+};

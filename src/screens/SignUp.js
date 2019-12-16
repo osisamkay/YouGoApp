@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   View,
   Text,
@@ -7,16 +8,48 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Dimensions,
+  StatusBar,
 } from 'react-native';
+// import {Toast} from 'native-base';
 import AllButton from '../components/AllButtons';
 import TextComponent from '../components/TextComponent';
-import {widthPercentageToDP} from 'react-native-responsive-screen';
+import {registerUser} from '../actions/Actions';
+import SuccessModals from '../components/Modals/SuccessModal';
 
 const {height} = Dimensions.get('screen'); // to get screen dimension (width and height)
 
 const SignUp = ({navigation}) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [number, setNumber] = useState('');
+  const [password, setPassword] = useState('');
+  const [eye, setEye] = useState(false);
+  const [modal, setModal] = useState(registration);
+
+  useEffect(() => {
+    if (registrationMessage !== '') {
+      setModal(true);
+    }
+  }, [registrationMessage]);
+
+  // redux selector
+  const {registration, registrationMessage, regError} = useSelector(
+    state => state,
+  );
+
+  const dispatch = useDispatch();
+  const userData = {name, email, phone: number, password};
+
+  const handleRegDone = () => {
+    setModal(false);
+    navigation.navigate('Login');
+  };
+
+  console.log(registration, registrationMessage, regError);
+
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#522E92" />
       <View style={{marginTop: 94}}>
         <View style={styles.image}>
           <Image source={require('../../Assets/logo.png')} />
@@ -26,26 +59,40 @@ const SignUp = ({navigation}) => {
         </View>
         <View style={styles.form}>
           <View>
-            <TextComponent label="Full Name" />
+            <TextComponent label="Full Name" getText={name => setName(name)} />
+          </View>
+
+          <View>
+            <TextComponent label="Email" getText={email => setEmail(email)} />
           </View>
           <View>
-            <TextComponent label="Email" />
+            <TextComponent
+              label="Phone Number"
+              getText={number => setNumber(number)}
+            />
           </View>
           <View>
-            <TextComponent label="Phone Number" />
-          </View>
-          <View>
-            <TextComponent label="Password" />
+            <TextComponent
+              label="Password"
+              show={!eye}
+              eye={!eye ? 'eye' : 'eye-with-line'}
+              handlePassword={() => {
+                setEye(!eye);
+              }}
+              getText={password => setPassword(password)}
+            />
           </View>
         </View>
       </View>
+
       <View style={styles.bottom}>
         <AllButton
           style={{textAlign: 'center'}}
           title="sign up"
           handlePress={() => {
-            navigation.navigate('Home');
+            dispatch(registerUser(userData));
           }}
+          status={true}
         />
         <View style={styles.linkGroup}>
           <Text>Already Have an account?</Text>
@@ -58,6 +105,14 @@ const SignUp = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
+      <SuccessModals
+        modalVisible={modal}
+        handleOutside={() => {
+          setModal(false);
+        }}
+        handleRegDone={handleRegDone}>
+        <Text>{registrationMessage}</Text>
+      </SuccessModals>
     </SafeAreaView>
   );
 };

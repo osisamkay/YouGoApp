@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -9,15 +9,16 @@ import {
   Linking,
   Platform,
   StatusBar,
+  ScrollView,
 } from 'react-native';
-import AllButton from '../components/AllButtons';
-import InitialHomeScreen from './InitialHomeScreen';
 import CurrentRideCard from '../components/CurrentRideCard';
 import UpComingRides from '../components/UpComingRides';
 import TopDeals from '../components/TopDeals';
 import {Deals} from '../DealsData';
+import TopUpModal from '../components/Modals/TopUpModal';
 
 const HomeScreen = ({navigation}) => {
+  const [topUp, setTopUp] = useState(false);
   const makeCall = () => {
     let phoneNumber = '';
 
@@ -28,6 +29,11 @@ const HomeScreen = ({navigation}) => {
     }
 
     Linking.openURL(phoneNumber);
+  };
+
+  // handle top up
+  const handleTopUp = () => {
+    setTopUp(true);
   };
   return (
     <View style={styles.container}>
@@ -57,49 +63,60 @@ const HomeScreen = ({navigation}) => {
           </ImageBackground>
         </View>
       </View>
-      <View>
-        <View style={styles.view}>
-          <Text style={styles.viewText}>Current Ride</Text>
-          <TouchableOpacity>
-            <Text style={styles.viewText}>View All</Text>
-          </TouchableOpacity>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View>
+          <View style={styles.view}>
+            <Text style={styles.viewText}>Current Ride</Text>
+            <TouchableOpacity>
+              <Text style={styles.viewText}>View All</Text>
+            </TouchableOpacity>
+          </View>
+          <CurrentRideCard makeCall={makeCall} TopUp={handleTopUp} />
         </View>
-        <CurrentRideCard makeCall={makeCall} />
-      </View>
-      <View>
-        <View style={styles.view}>
-          <Text style={styles.viewText}>Up Coming Ride</Text>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('UpComing');
-            }}>
-            <Text style={styles.viewText}>View All</Text>
-          </TouchableOpacity>
-        </View>
+        <View>
+          <View style={styles.view}>
+            <Text style={styles.viewText}>Up Coming Ride</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('UpComing');
+              }}>
+              <Text style={styles.viewText}>View All</Text>
+            </TouchableOpacity>
+          </View>
 
-        <View style={{marginHorizontal: 17}}>
-          <UpComingRides />
+          <View style={{marginHorizontal: 17}}>
+            <UpComingRides />
+          </View>
         </View>
-      </View>
-      <View>
-        <View style={styles.view}>
-          <Text style={styles.viewText}>Current Ride</Text>
-          <TouchableOpacity>
-            <Text style={styles.viewText}>View All</Text>
-          </TouchableOpacity>
+        <View>
+          <View style={styles.view}>
+            <Text style={styles.viewText}>Top Deals</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('TopDeals');
+              }}>
+              <Text style={styles.viewText}>View All</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.current}>
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              data={Deals}
+              keyExtractor={item => item.id}
+              renderItem={({item}) => {
+                return <TopDeals title={item.deal} price={item.price} />;
+              }}
+            />
+          </View>
         </View>
-        <View style={styles.current}>
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={Deals}
-            keyExtractor={item => item.id}
-            renderItem={({item}) => {
-              return <TopDeals title={item.deal} price={item.price} />;
-            }}
-          />
-        </View>
-      </View>
+      </ScrollView>
+      <TopUpModal
+        modalVisible={topUp}
+        handleOutside={() => {
+          setTopUp(false);
+        }}
+      />
     </View>
   );
 };
@@ -154,9 +171,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 17,
   },
   viewText: {
-    fontWeight: 'bold',
+    fontWeight: '800',
   },
   current: {
-    marginHorizontal: 17,
+    marginLeft: 17,
   },
 });

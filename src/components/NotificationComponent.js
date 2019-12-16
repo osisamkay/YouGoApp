@@ -13,7 +13,6 @@ const NotificationComponent = ({
   handleLongPress,
   value,
 }) => {
-  console.log(checked);
   return (
     <TouchableOpacity style={styles.container} onLongPress={handleLongPress}>
       <View style={styles.labelTop}>
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
   labelText: {
     marginLeft: 10,
     color: 'black',
-    fontWeight: 'bold',
+    fontWeight: '600',
     fontFamily: 'Roboto',
     fontSize: 15,
   },
@@ -65,7 +64,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     fontSize: 13,
     alignSelf: 'center',
-    width: '85%',
+    width: 320,
+    maxWidth: '85%',
     color: '#8c8c8c',
     marginLeft: 30,
   },

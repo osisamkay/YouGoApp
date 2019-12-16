@@ -18,6 +18,7 @@ export default Cars;
 const styles = StyleSheet.create({
   container: {
     width: '100%',
+    maxWidth: 105,
     backgroundColor: '#fff',
     paddingTop: 13,
     borderRadius: 7,
@@ -33,5 +34,6 @@ const styles = StyleSheet.create({
   },
   image: {
     alignSelf: 'center',
+    maxWidth: 105,
   },
 });

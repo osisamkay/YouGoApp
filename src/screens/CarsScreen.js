@@ -10,14 +10,15 @@ import {
   Animated,
   NativeModules,
   LayoutAnimation,
+  StatusBar,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons/';
 import Cars from '../components/Cars';
-import {CarData} from '../CarData';
+import {CarData, CarBrand} from '../CarData';
 import LinearGradient from 'react-native-linear-gradient';
 import AllButton from '../components/AllButtons';
-import * as Animatable from 'react-native-animatable';
 import YearsModal from '../components/Modals/Years';
+import {FlatList} from 'react-native-gesture-handler';
 const {height} = Dimensions.get('screen');
 
 const {UIManager} = NativeModules;
@@ -82,10 +83,15 @@ const CarsScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#522E92" />
       <View style={!bot ? {height: '50%'} : {height: '20%'}}>
         <Text style={styles.title}>Sedans</Text>
         <View style={styles.imagecontainer}>
-          <Image source={require('../../Assets/blackcar.png')} />
+          <Image
+            source={require('../../Assets/blackcar.png')}
+            style={{width: '100%', height: '100%'}}
+            resizeMode="contain"
+          />
         </View>
         <View style={!info ? styles.hide : styles.show}>
           <View style={styles.topview}>
@@ -115,8 +121,8 @@ const CarsScreen = ({navigation}) => {
         colors={['#673AB7', '#370B87']}
         style={
           !bot
-            ? {...styles.bottom, height: height / 4.65}
-            : {...styles.bottom, height: height * 0.6}
+            ? {...styles.bottom, height: '35%'}
+            : {...styles.bottom, height: '100%'}
         }>
         <TouchableOpacity
           onPress={onpressd}
@@ -222,7 +228,7 @@ const CarsScreen = ({navigation}) => {
                           overflow: 'scroll',
                         }
                   }>
-                  {CarData.map(data => {
+                  {CarBrand.map(data => {
                     return (
                       <View key={data.id}>
                         <Cars
@@ -270,13 +276,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: '600',
-    fontSize: 28,
+    fontSize: 17,
     color: '#673AB7',
     textAlign: 'center',
     fontFamily: 'Roboto',
   },
   imagecontainer: {
     alignItems: 'center',
+    height: 100,
   },
   description: {
     fontSize: 15,
@@ -333,10 +340,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
   },
   carlistone: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    flexDirection: 'column',
-    // justifyContent: 'space-around',
     paddingVertical: 13,
   },
   scroll: {
@@ -368,5 +371,8 @@ const styles = StyleSheet.create({
   },
   show: {
     display: 'flex',
+  },
+  itemInvisible: {
+    backgroundColor: 'transparent',
   },
 });

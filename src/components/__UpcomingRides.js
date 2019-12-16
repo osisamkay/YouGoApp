@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import {Card, CardItem, Button} from 'native-base';
 import Benz from '../../Assets/benz2.svg';
 
@@ -8,7 +8,10 @@ const __UpcomingRides = () => {
     <Card style={styles.container}>
       <CardItem>
         <View>
-          <Benz />
+          <Image
+            source={require('../../Assets/toyo.png')}
+            resizeMode="contain"
+          />
           <Text style={styles.label}>Model</Text>
           <Text style={styles.txt}>Toyota Camry 2015</Text>
         </View>
@@ -44,18 +47,20 @@ const styles = StyleSheet.create({
   detailGroup: {
     flexDirection: 'column',
     alignItems: 'flex-start',
+    paddingRight: 17,
   },
   details: {
     marginBottom: 5,
   },
   btn: {
-    width: 85,
+    // width: '45%',
     height: 27,
     backgroundColor: '#673AB7',
     alignItems: 'center',
     borderRadius: 15,
     marginRight: 5,
     justifyContent: 'center',
+    marginTop: 5,
   },
   btntxt: {
     color: 'white',
@@ -66,6 +71,7 @@ const styles = StyleSheet.create({
   },
   btnGroup: {
     flexDirection: 'row',
+    // flexWrap: 'wrap',
   },
   label: {
     fontSize: 11,
@@ -75,5 +81,6 @@ const styles = StyleSheet.create({
   txt: {
     color: '#373737',
     fontWeight: 'bold',
+    fontSize: 13,
   },
 });

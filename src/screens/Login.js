@@ -6,19 +6,31 @@ import {
   Image,
   SafeAreaView,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import AllButton from '../components/AllButtons';
 import TextComponent from '../components/TextComponent';
 import TokenModal from '../components/Modals/TokenModal';
 import {withNavigation} from 'react-navigation';
+import {useDispatch, useSelector} from 'react-redux';
+import {UserLogin} from '../actions/Actions';
 
 const Login = ({navigation}) => {
-  Login.navigationOptions = {
-    title: '78fh7h',
-  };
   const [modal, setModal] = useState(false);
+  const [eye, setEye] = useState(false);
+  const [password, setPassword] = useState('');
+  const [login, setLogin] = useState('');
+
+  // redux selector
+  const {registration, registrationMessage, regError} = useSelector(
+    state => state,
+  );
+
+  const dispatch = useDispatch();
+  const UserData = {email: login, password};
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#522E92" />
       <View style={styles.container2}>
         <View style={{marginTop: 94}}>
           <View style={styles.image}>
@@ -29,10 +41,21 @@ const Login = ({navigation}) => {
           </View>
           <View style={styles.form}>
             <View style={{marginBottom: 46}}>
-              <TextComponent label="Phone Number/Email" />
+              <TextComponent
+                label="Phone Number/Email"
+                getText={text => setLogin(text)}
+              />
             </View>
             <View style={{marginBottom: 19}}>
-              <TextComponent label="Password" />
+              <TextComponent
+                label="Password"
+                show={!eye}
+                eye={!eye ? 'eye' : 'eye-with-line'}
+                handlePassword={() => {
+                  setEye(!eye);
+                }}
+                getText={password => setPassword(password)}
+              />
             </View>
             <TouchableOpacity onPress={() => setModal(!modal)}>
               <Text style={styles.link}>Forgot Password?</Text>
@@ -43,7 +66,8 @@ const Login = ({navigation}) => {
           <AllButton
             style={{textAlign: 'center'}}
             title="sign in"
-            handlePress={() => navigation.navigate('CarScreen')}
+            status={true}
+            handlePress={() => dispatch(UserLogin(UserData))}
           />
           <View style={styles.linkGroup}>
             <Text>Don't Have an account?</Text>

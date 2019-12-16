@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Platform,
+  ScrollView,
+  StatusBar,
 } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import TimeModal from '../components/Modals/TimeModal';
@@ -79,7 +81,8 @@ const CalenderView = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <StatusBar barStyle="light-content" backgroundColor="#522E92" />
+      <ScrollView>
         <View style={styles.mode}>
           <TouchableOpacity
             onPress={() => {
@@ -132,7 +135,7 @@ const CalenderView = ({navigation}) => {
             }}
           />
         </View>
-      </View>
+      </ScrollView>
       <View style={styles.btn}>
         <AllButton
           title="Continue"
@@ -164,7 +167,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   calendar: {
-    // height: '92%',
+    // height: '60%',
   },
   mode: {
     flexDirection: 'row',
@@ -186,7 +189,7 @@ const styles = StyleSheet.create({
     borderRadius: 17,
     borderTopColor: 'rgba(0,0,0,0.15)',
     // borderWidth: 1,
-    height: '25%',
+    // height: '25%',
   },
   btn: {
     paddingBottom: 17,
@@ -201,6 +204,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0,0,0,0.2)',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    flex: 1,
   },
   delete: {
     color: 'red',

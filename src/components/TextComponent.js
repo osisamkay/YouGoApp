@@ -1,17 +1,26 @@
 import React from 'react';
-import {Item, Input, Label} from 'native-base';
+import {Item, Input, Label, Icon} from 'native-base';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import {widthPercentageToDP} from 'react-native-responsive-screen';
-import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
+// import Icon from 'react-native-vector-icons/FontAwesome';
 
 const {height} = Dimensions.get('screen'); // to get screen dimension (width and height)
 
-const TextComponent = ({label}) => {
+const TextComponent = ({label, getText, eye, handlePassword, show}) => {
   return (
     <View>
       <Item floatingLabel style={styles.container}>
         <Label style={styles.label}>{label}</Label>
-        <Input />
+        <Input
+          onChangeText={getText}
+          autoCompleteType="off"
+          secureTextEntry={label === 'Password' ? show : false}
+        />
+        <Icon
+          type="Entypo"
+          name={label === 'Password' ? `${eye}` : ''}
+          onPress={handlePassword}
+        />
       </Item>
     </View>
   );

@@ -10,9 +10,9 @@ const TopDeals = ({title, price}) => {
         <Sad />
         <View style={{justifyContent: 'space-evenly'}}>
           <Text style={styles.dealText}>{title}</Text>
-          <Text style={styles.dealText}>{price}</Text>
+          {/* <Text style={styles.dealText}>{price}</Text> */}
           <Button style={styles.button}>
-            <Text style={styles.buttonText}>See More </Text>
+            <Text style={styles.buttonText}>Get Now </Text>
           </Button>
         </View>
       </View>
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#673AB7',
     borderRadius: 5,
+    height: 35,
   },
   dealText: {
     fontWeight: 'bold',

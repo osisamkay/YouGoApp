@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import {NotiData} from '../NotificarionData';
 import HistoryComponent from '../components/HistoryComponent';
@@ -13,6 +14,7 @@ import HistoryComponent from '../components/HistoryComponent';
 const History = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#522E92" />
       <View style={styles.scrollContainer}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {NotiData.map(data => {

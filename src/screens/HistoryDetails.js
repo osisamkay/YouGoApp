@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import Car from '../../Assets/prado';
 import {Rating, AirbnbRating} from 'react-native-ratings';
@@ -15,6 +16,7 @@ const HistoryDetails = () => {
   };
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#522E92" />
       <ScrollView style={styles.container}>
         <View style={styles.topDetailContainer}>
           <Text style={styles.carName}>Toyota Prado 2015</Text>
@@ -70,7 +72,7 @@ const HistoryDetails = () => {
           </TouchableOpacity>
           <TouchableOpacity>
             <View style={styles.rating}>
-              <Text style={styles.ratingTxt}>Resend Receipt</Text>
+              <Text style={styles.ratingTxt}>Rate Driver</Text>
               <Rating
                 onFinishRating={ratingCompleted}
                 startingValue={0}

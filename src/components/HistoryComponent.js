@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   labelText: {
     marginLeft: 10,
     color: 'black',
-    fontWeight: 'bold',
+    fontWeight: '600',
     fontFamily: 'Roboto',
     fontSize: 15,
   },
