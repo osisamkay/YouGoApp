@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   View,
   Text,
@@ -10,7 +11,10 @@ import {
   Platform,
   StatusBar,
   ScrollView,
+  PermissionsAndroid,
+  Alert,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 import CurrentRideCard from '../components/CurrentRideCard';
 import UpComingRides from '../components/UpComingRides';
 import TopDeals from '../components/TopDeals';
@@ -19,6 +23,41 @@ import TopUpModal from '../components/Modals/TopUpModal';
 
 const HomeScreen = ({navigation}) => {
   const [topUp, setTopUp] = useState(false);
+  const {userData, isLogged} = useSelector(state => state);
+
+  // on boarding
+  useEffect(() => {
+    // return async () => {
+    //   try {
+    //     const granted = await PermissionsAndroid.request(
+    //       PermissionsAndroid.PERMISSIONS.INTERNET,
+    //       {
+    //         title: 'YouGo Internet Permission',
+    //         message: 'YouGo App needs access to the Internet ',
+    //       },
+    //     );
+    //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+    //       Alert.alert('internet Permission Granted.');
+    //       if (isLogged !== true) {
+    //         navigation.navigate('Login');
+    //       }
+    //       // store token
+    //       AsyncStorage.setItem('@Token', `${userData.token}`);
+    //     } else {
+    //       Alert.alert('internet Permission Not Granted');
+    //     }
+    //   } catch (err) {
+    //     console.warn(err);
+    //   }
+    // };
+    if (isLogged !== true) {
+      navigation.navigate('Login');
+    }
+    // store token
+    AsyncStorage.setItem('@Token', `${userData.token}`);
+  }, []);
+
+  // make calls
   const makeCall = () => {
     let phoneNumber = '';
 
@@ -46,7 +85,7 @@ const HomeScreen = ({navigation}) => {
             <View style={styles.topContainer}>
               <View style={styles.topTexts}>
                 <Text style={styles.topText1}>Hello,</Text>
-                <Text style={styles.topText2}>Chiamaka Nkem-Eze</Text>
+                <Text style={styles.topText2}>{userData.name}</Text>
               </View>
               <View style={styles.buttonGroup}>
                 <View style={{alignSelf: 'flex-end', marginRight: 17}}>

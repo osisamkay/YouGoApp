@@ -7,6 +7,8 @@ const {
   LOGIN_USER,
   LOGIN_ERROR,
   LOGIN_SUCCESS,
+  CLOSE_ERROR,
+  CLOSE_SUCCESS,
 } = actionType;
 
 export const registerUser = payload => ({
@@ -33,5 +35,13 @@ export const loginError = payload => ({
 });
 export const loginSuccess = payload => ({
   type: LOGIN_SUCCESS,
+  payload,
+});
+export const closeError = payload => ({
+  type: CLOSE_ERROR,
+  payload,
+});
+export const closeSuccess = payload => ({
+  type: CLOSE_SUCCESS,
   payload,
 });

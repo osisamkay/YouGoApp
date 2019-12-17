@@ -41,39 +41,19 @@ function* userLogin({payload}) {
       let data = request.data;
       let s = data.statuscode;
       if (s === 400) {
-        let err = data.error;
+        let err = data.message;
         yield put(loginError(err));
       } else {
-        let m = data.message;
-        yield put(loginSuccess(m));
+        let user = data.data[0];
+        console.log(user);
+        yield put(loginSuccess(user));
       }
     }
   } catch (err) {
-    console.log(err);
     yield put({type: 'ERROR'});
     alert('something went wrong, Please check that you are connected');
   }
 }
-// function* startListener() {
-//   // #1
-//   const channel = new eventChannel(emiter => {
-//     const listener = database.ref('users').on('value', snapshot => {
-//       emiter({data: snapshot.val() || {}});
-//     });
-
-//     // #2
-//     return () => {
-//       listener.off();
-//     };
-//   });
-
-//   // #3
-//   while (true) {
-//     const {data} = yield take(channel);
-//     const Data = Object.keys(data).map((i, j) => data[i]);
-//     yield put({type: 'submit-Async', payload: Data.reverse()});
-//   }
-// }
 
 export default function* saga() {
   yield takeEvery(REGISTER_USER, registerUsers);

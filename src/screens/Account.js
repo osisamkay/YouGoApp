@@ -10,6 +10,7 @@ import {
   LayoutAnimation,
   StatusBar,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 import AllButton from '../components/AllButtons';
 import Avatar from '../../Assets/avatar.svg';
 import Accordion from '../components/Accordion';
@@ -26,6 +27,7 @@ const Account = ({navigation}) => {
   const [Support, setSupport] = useState(false);
   const [modal, setModal] = useState(false);
   const [logoutModals, setLogoutModal] = useState(false);
+  const {userData, isLogged} = useSelector(state => state);
 
   const handleLogout = () => {
     navigation.navigate('Login');
@@ -47,9 +49,9 @@ const Account = ({navigation}) => {
           <Text style={styles.edit}>...</Text>
           <View style={styles.avatar}>
             <Avatar />
-            <Text style={styles.name}>Chiamaka Nkem-Eze</Text>
-            <Text style={styles.dets}>08123456789</Text>
-            <Text style={styles.dets}>amakaeze@yougo.com</Text>
+            <Text style={styles.name}>{userData.name}</Text>
+            <Text style={styles.dets}>{userData.phone}</Text>
+            <Text style={styles.dets}>{userData.email}</Text>
           </View>
           <View style={{height: 450, paddingTop: '34%'}}>
             <ScrollView
@@ -214,6 +216,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     marginTop: 5,
+    textAlign: 'center',
   },
   detailsContainer: {
     paddingVertical: 5,

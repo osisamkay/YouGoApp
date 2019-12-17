@@ -9,43 +9,35 @@ import {
   TouchableOpacity,
   Dimensions,
   StatusBar,
+  FlatList,
 } from 'react-native';
 // import {Toast} from 'native-base';
 import AllButton from '../components/AllButtons';
 import TextComponent from '../components/TextComponent';
-import {registerUser} from '../actions/Actions';
+import {registerUser, closeError, closeSuccess} from '../actions/Actions';
 import SuccessModals from '../components/Modals/SuccessModal';
+import ErrorModal from '../components/Modals/ErrorModals';
 
 const {height} = Dimensions.get('screen'); // to get screen dimension (width and height)
 
 const SignUp = ({navigation}) => {
+  // redux selector
+  const {registration, registrationMessage, regError, isError} = useSelector(
+    state => state,
+  );
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [number, setNumber] = useState('');
   const [password, setPassword] = useState('');
   const [eye, setEye] = useState(false);
   const [modal, setModal] = useState(registration);
-
-  useEffect(() => {
-    if (registrationMessage !== '') {
-      setModal(true);
-    }
-  }, [registrationMessage]);
-
-  // redux selector
-  const {registration, registrationMessage, regError} = useSelector(
-    state => state,
-  );
-
   const dispatch = useDispatch();
   const userData = {name, email, phone: number, password};
 
   const handleRegDone = () => {
-    setModal(false);
+    dispatch(closeSuccess(false));
     navigation.navigate('Login');
   };
-
-  console.log(registration, registrationMessage, regError);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -105,14 +97,31 @@ const SignUp = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <SuccessModals
-        modalVisible={modal}
-        handleOutside={() => {
-          setModal(false);
-        }}
-        handleRegDone={handleRegDone}>
+      <SuccessModals modalVisible={registration} handleRegDone={handleRegDone}>
         <Text>{registrationMessage}</Text>
       </SuccessModals>
+      <ErrorModal
+        modalVisible={isError}
+        handleOutside={() => {
+          dispatch(closeError(false));
+        }}
+        handleClose={() => {
+          dispatch(closeError(false));
+        }}>
+        <View>
+          <FlatList
+            data={regError}
+            keyExtractor={item => item.param}
+            renderItem={({item}) => {
+              return (
+                <View>
+                  <Text style={styles.textIn}>{item.msg}</Text>
+                </View>
+              );
+            }}
+          />
+        </View>
+      </ErrorModal>
     </SafeAreaView>
   );
 };
@@ -163,5 +172,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginHorizontal: 4,
     fontWeight: 'bold',
+  },
+  err: {
+    flexDirection: 'row',
+  },
+  textIn: {
+    fontWeight: '600',
+    fontSize: 17,
+    textAlign: 'center',
+    color: '#F98383',
+    paddingTop: 9,
   },
 });

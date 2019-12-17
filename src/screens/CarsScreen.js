@@ -1,4 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
+import {useSelector} from 'react-redux';
 import {
   View,
   Text,
@@ -12,6 +13,7 @@ import {
   LayoutAnimation,
   StatusBar,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons/';
 import Cars from '../components/Cars';
 import {CarData, CarBrand} from '../CarData';
@@ -20,6 +22,7 @@ import AllButton from '../components/AllButtons';
 import YearsModal from '../components/Modals/Years';
 import {FlatList} from 'react-native-gesture-handler';
 const {height} = Dimensions.get('screen');
+import axios from 'axios';
 
 const {UIManager} = NativeModules;
 UIManager.setLayoutAnimationEnabledExperimental &&
@@ -34,6 +37,26 @@ const CarsScreen = ({navigation}) => {
   const [year, setYear] = useState([]);
   const [yearModal, setYearModal] = useState(false);
   const [info, setInfo] = useState(false);
+  const [getType, setGetType] = useState([]);
+
+  const {userData} = useSelector(state => state);
+
+  let token = userData.token;
+  const API = axios.create({
+    baseURL: 'http://35.178.37.45:5000/',
+    headers: {'x-auth-token': `${token}`},
+  });
+
+  useEffect(() => {
+    const Cars = new Promise(resolve => {
+      resolve(API.post('user/cars/type', {cartype: 'p'}));
+    });
+    Cars.then(({data: {data}}) => {
+      setGetType(data);
+    });
+  }, []);
+
+  // useEffect(() => {}, [input]);
 
   // to slide bottom viw uo
   const onpressd = () => {
@@ -79,6 +102,15 @@ const CarsScreen = ({navigation}) => {
     setYearModal(false);
     setBrand(true);
     setInfo(true);
+  };
+
+  const TripDetail = {
+    pickTime: '16:00',
+    pickLocation: '23, Toyin Road, Ikeja, Lagos',
+    pickDate: '2019-12-10',
+    driver: '5dd8d9ec5e8feb84d408023f',
+    car: '5de8d14c6b0f4403802befc2',
+    duration: ['range', '2019-12-10', '2019-12-19'],
   };
 
   return (
@@ -172,13 +204,13 @@ const CarsScreen = ({navigation}) => {
                       ? {...styles.carlistone, height: 133, overflow: 'hidden'}
                       : {...styles.carlistone, height: 267, overflow: 'scroll'}
                   }>
-                  {CarData.map(data => {
+                  {getType.map(data => {
                     return (
-                      <TouchableOpacity key={data.id}>
+                      <TouchableOpacity key={data._id}>
                         <Cars
-                          name={data.carType}
+                          name={data.type}
                           handlePress={() => {
-                            handlePress(data.carType);
+                            handlePress(data.type);
                           }}
                         />
                       </TouchableOpacity>

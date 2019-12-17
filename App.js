@@ -59,7 +59,6 @@ const HomeTab = createStackNavigator(
 );
 
 HomeTab.navigationOptions = ({navigation}) => {
-  console.log(navigation);
   let tabBarVisible = true;
   if (navigation.state.index > 0) {
     tabBarVisible = false;

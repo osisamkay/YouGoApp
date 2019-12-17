@@ -13,7 +13,8 @@ import TextComponent from '../components/TextComponent';
 import TokenModal from '../components/Modals/TokenModal';
 import {withNavigation} from 'react-navigation';
 import {useDispatch, useSelector} from 'react-redux';
-import {UserLogin} from '../actions/Actions';
+import {UserLogin, closeError} from '../actions/Actions';
+import ErrorModal from '../components/Modals/ErrorModals';
 
 const Login = ({navigation}) => {
   const [modal, setModal] = useState(false);
@@ -22,9 +23,11 @@ const Login = ({navigation}) => {
   const [login, setLogin] = useState('');
 
   // redux selector
-  const {registration, registrationMessage, regError} = useSelector(
-    state => state,
-  );
+  const {logError, isError, isLogged, userData} = useSelector(state => state);
+
+  if (isLogged === true) {
+    navigation.navigate('Home');
+  }
 
   const dispatch = useDispatch();
   const UserData = {email: login, password};
@@ -90,6 +93,16 @@ const Login = ({navigation}) => {
           </View>
         </View>
       </View>
+      <ErrorModal
+        modalVisible={isError}
+        handleOutside={() => {
+          dispatch(closeError(false));
+        }}
+        handleClose={() => {
+          dispatch(closeError(false));
+        }}>
+        <Text style={styles.textIn}>{logError}</Text>
+      </ErrorModal>
     </SafeAreaView>
   );
 };
@@ -143,5 +156,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginHorizontal: 4,
     fontWeight: 'bold',
+  },
+  textIn: {
+    fontWeight: '600',
+    fontSize: 17,
+    textAlign: 'center',
+    color: '#F98383',
+    paddingTop: 9,
   },
 });

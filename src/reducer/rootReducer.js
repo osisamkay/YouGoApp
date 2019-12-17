@@ -5,6 +5,8 @@ const {
   REGISTRATION_ERROR,
   LOGIN_ERROR,
   LOGIN_SUCCESS,
+  CLOSE_ERROR,
+  CLOSE_SUCCESS,
 } = actionType;
 
 const initialState = {
@@ -14,6 +16,8 @@ const initialState = {
   registration: false,
   registrationMessage: '',
   regError: '',
+  isError: false,
+  logError: '',
 };
 
 export const rootReducer = (state = initialState, {type, payload}) => {
@@ -21,13 +25,15 @@ export const rootReducer = (state = initialState, {type, payload}) => {
     case REGISTRATION_SUCCESS:
       return {...state, registrationMessage: payload, registration: true};
     case REGISTRATION_ERROR:
-      return {...state, regError: payload, registration: false};
+      return {...state, regError: payload, isError: true};
     case LOGIN_ERROR:
-      return {...state, hobby: payload};
+      return {...state, logError: payload, isError: true};
     case LOGIN_SUCCESS:
       return {...state, userData: payload, isLogged: true};
-    case 'submit':
-      return {list: [...state.list, payload]};
+    case CLOSE_ERROR:
+      return {...state, isError: payload};
+    case CLOSE_SUCCESS:
+      return {...state, registration: payload};
     default:
       return state;
   }
