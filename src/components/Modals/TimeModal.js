@@ -16,7 +16,7 @@ const TimeModal = ({
   startDate,
   endDate,
   handleStartTime,
-  getStopTime,
+  getLocation,
 }) => {
   return (
     <Modal
@@ -26,20 +26,18 @@ const TimeModal = ({
       <View style={styles.container}>
         <View>
           <View style={styles.iconset}>
-            <Text style={styles.title}>Pick a Time Duration</Text>
+            <Text style={styles.title}>Choose Pick Up Time & Location</Text>
           </View>
           <View style={styles.text}>
             <View style={styles.Input}>
-              <Item floatingLabel style={{width: '40%'}}>
-                <Label style={{fontSize: 15}}>Start Time</Label>
+              <Item floatingLabel style={{width: '100%'}}>
+                <Label style={{fontSize: 15}}>Pickup Time</Label>
                 <Input value={startDate} onFocus={ShowClock} />
               </Item>
-              <Text style={{marginTop: 20, fontWeight: 'bold', fontSize: 17}}>
-                :
-              </Text>
-              <Item floatingLabel style={{width: '40%'}}>
-                <Label style={{fontSize: 15}}>Stop Time</Label>
-                <Input value={endDate} onFocus={ShowStopClock} />
+
+              <Item floatingLabel style={{width: '100%', marginVertical: 20}}>
+                <Label style={{fontSize: 15}}>Pickup Location</Label>
+                <Input multiline={true} onChangeText={getLocation} />
               </Item>
             </View>
             {Show && (
@@ -126,7 +124,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   Input: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 34,
   },

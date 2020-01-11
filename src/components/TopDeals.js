@@ -8,9 +8,11 @@ const TopDeals = ({title, price}) => {
     <View style={{paddingBottom: 9, paddingRight: 9}}>
       <View style={styles.cardContainer}>
         <Sad />
-        <View style={{justifyContent: 'space-evenly'}}>
-          <Text style={styles.dealText}>{title}</Text>
-          {/* <Text style={styles.dealText}>{price}</Text> */}
+        <View style={{justifyContent: 'space-evenly', paddingRight: 30}}>
+          <Text numberOfLines={2} ellipsizeMode="tail" style={styles.dealText}>
+            {title}
+          </Text>
+          <Text style={styles.dealText}>{price}</Text>
           <Button style={styles.button}>
             <Text style={styles.buttonText}>Get Now </Text>
           </Button>
@@ -51,5 +53,6 @@ const styles = StyleSheet.create({
   },
   dealText: {
     fontWeight: 'bold',
+    width: 100,
   },
 });

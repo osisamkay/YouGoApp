@@ -3,8 +3,11 @@ import {View, Text, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
 import {Card, CardItem, Button} from 'native-base';
 import Car from '../../Assets/summary.svg';
 import AllButton from '../components/AllButtons';
+import {useSelector} from 'react-redux';
 
 const Summary = () => {
+  const {tripDetsOne, tripDetsTwo} = useSelector(state => state);
+  console.log(tripDetsTwo);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -17,40 +20,37 @@ const Summary = () => {
           <CardItem style={styles.cardetails}>
             <View>
               <Text style={styles.label}>Car Type</Text>
-              <Text style={styles.txt}>Opel Meriva</Text>
+              <Text style={styles.txt}>{tripDetsOne.carType}</Text>
             </View>
             <View>
               <Text style={styles.label}>Car Model</Text>
-              <Text style={styles.txt}>Opel Meriva</Text>
+              <Text style={styles.txt}>{tripDetsOne.carBrand}</Text>
             </View>
             <View>
               <Text style={styles.label}>Year</Text>
-              <Text style={styles.txt}>2019</Text>
+              <Text style={styles.txt}>{tripDetsOne.year}</Text>
             </View>
           </CardItem>
           <CardItem>
             <View>
               <Text style={styles.label}>Pick-up Location</Text>
-              <Text style={styles.txt}>
-                27, Unity Road , Off Toyin Street Ikeja Lagos
-              </Text>
+              <Text style={styles.txt}>{tripDetsTwo.location}</Text>
             </View>
           </CardItem>
-          <CardItem>
-            <View>
-              <Text style={styles.label}>Pick-up Date</Text>
-              <Text style={styles.txt}>Thursday, 20th November 2019</Text>
-            </View>
-          </CardItem>
+          {/* <CardItem></CardItem> */}
           <CardItem style={styles.time}>
             <View>
-              <Text style={styles.label}>Pick-up Time</Text>
-              <Text style={styles.txt}>7:00 AM</Text>
+              <Text style={styles.label}>Pick-up Date</Text>
+              <Text style={styles.txt}>{tripDetsTwo.mode[1]}</Text>
             </View>
             <View>
+              <Text style={styles.label}>Pick-up Time</Text>
+              <Text style={styles.txt}>{tripDetsTwo.time}</Text>
+            </View>
+            {/* <View>
               <Text style={styles.label}>Drop-Off Time</Text>
               <Text style={styles.txt}>7:00PM</Text>
-            </View>
+            </View> */}
           </CardItem>
         </Card>
       </ScrollView>

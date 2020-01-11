@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import {
   NativeModules,
   LayoutAnimation,
   StatusBar,
+  ActivityIndicator,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons/';
@@ -23,6 +24,7 @@ import YearsModal from '../components/Modals/Years';
 import {FlatList} from 'react-native-gesture-handler';
 const {height} = Dimensions.get('screen');
 import axios from 'axios';
+import {firstTripDetails} from '../actions/Actions';
 
 const {UIManager} = NativeModules;
 UIManager.setLayoutAnimationEnabledExperimental &&
@@ -38,8 +40,11 @@ const CarsScreen = ({navigation}) => {
   const [yearModal, setYearModal] = useState(false);
   const [info, setInfo] = useState(false);
   const [getType, setGetType] = useState([]);
+  const [getBrand, setGetBrand] = useState([]);
+  const [active, setActive] = useState(false);
 
   const {userData} = useSelector(state => state);
+  const dispatch = useDispatch();
 
   let token = userData.token;
   const API = axios.create({
@@ -49,14 +54,14 @@ const CarsScreen = ({navigation}) => {
 
   useEffect(() => {
     const Cars = new Promise(resolve => {
-      resolve(API.post('user/cars/type', {cartype: 'p'}));
+      resolve(API.post('user/cars'));
     });
     Cars.then(({data: {data}}) => {
       setGetType(data);
     });
   }, []);
 
-  // useEffect(() => {}, [input]);
+  // get Car Brand
 
   // to slide bottom viw uo
   const onpressd = () => {
@@ -86,9 +91,20 @@ const CarsScreen = ({navigation}) => {
 
   // get car type on click
   const handlePress = type => {
+    setGetBrand([]);
     setCarType(type);
     setType(true);
     setBrand(false);
+    // handle Car Brand
+    const Brand = new Promise(resolve => {
+      resolve(API.post('user/cars/type', {cartype: `${type}`}));
+    });
+    Brand.then(({data}) => {
+      if (data.statuscode === 200) {
+        let brand = data.data;
+        setGetBrand(brand);
+      }
+    });
   };
   // get car type on click
   const handleBrandSelect = type => {
@@ -105,12 +121,9 @@ const CarsScreen = ({navigation}) => {
   };
 
   const TripDetail = {
-    pickTime: '16:00',
-    pickLocation: '23, Toyin Road, Ikeja, Lagos',
-    pickDate: '2019-12-10',
-    driver: '5dd8d9ec5e8feb84d408023f',
-    car: '5de8d14c6b0f4403802befc2',
-    duration: ['range', '2019-12-10', '2019-12-19'],
+    carType,
+    carBrand,
+    year,
   };
 
   return (
@@ -195,6 +208,11 @@ const CarsScreen = ({navigation}) => {
                 style={
                   type ? styles.carTypeContainer : styles.carTypeContainershow
                 }>
+                {getType.length < 1 ? (
+                  <ActivityIndicator style={{marginTop: 150}} />
+                ) : (
+                  false
+                )}
                 <ScrollView
                   contentContainerStyle={styles.scroll}
                   showsVerticalScrollIndicator={false}
@@ -243,6 +261,11 @@ const CarsScreen = ({navigation}) => {
                 style={
                   brand ? styles.carTypeContainer : styles.carTypeContainershow
                 }>
+                {getBrand.length < 1 ? (
+                  <ActivityIndicator style={{marginTop: 150}} />
+                ) : (
+                  false
+                )}
                 <ScrollView
                   contentContainerStyle={styles.scroll}
                   showsVerticalScrollIndicator={false}
@@ -260,13 +283,13 @@ const CarsScreen = ({navigation}) => {
                           overflow: 'scroll',
                         }
                   }>
-                  {CarBrand.map(data => {
+                  {getBrand.map(data => {
                     return (
-                      <View key={data.id}>
+                      <View key={data._id}>
                         <Cars
-                          name={data.carType}
+                          name={data.brand}
                           handlePress={() => {
-                            handleBrandSelect(data.carType);
+                            handleBrandSelect(data.brand);
                           }}
                         />
                       </View>
@@ -281,6 +304,7 @@ const CarsScreen = ({navigation}) => {
               title="Next"
               status={info}
               handlePress={() => {
+                dispatch(firstTripDetails(TripDetail));
                 navigation.navigate('Calender');
               }}
             />

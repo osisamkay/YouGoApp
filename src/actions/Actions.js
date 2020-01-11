@@ -9,6 +9,8 @@ const {
   LOGIN_SUCCESS,
   CLOSE_ERROR,
   CLOSE_SUCCESS,
+  TRIP_DETAIL_ONE,
+  TRIP_DETAIL_TWO,
 } = actionType;
 
 export const registerUser = payload => ({
@@ -43,5 +45,13 @@ export const closeError = payload => ({
 });
 export const closeSuccess = payload => ({
   type: CLOSE_SUCCESS,
+  payload,
+});
+export const firstTripDetails = payload => ({
+  type: TRIP_DETAIL_ONE,
+  payload,
+});
+export const SECONDTripDetails = payload => ({
+  type: TRIP_DETAIL_TWO,
   payload,
 });

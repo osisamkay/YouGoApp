@@ -18,43 +18,47 @@ import {useSelector} from 'react-redux';
 import CurrentRideCard from '../components/CurrentRideCard';
 import UpComingRides from '../components/UpComingRides';
 import TopDeals from '../components/TopDeals';
-import {Deals} from '../DealsData';
 import TopUpModal from '../components/Modals/TopUpModal';
+import Instance from '../Api/Instance';
+import NoRides from '../components/NoRides';
+import NoCurrentRides from '../components/NoCurrntRide';
+import axios from 'axios';
 
 const HomeScreen = ({navigation}) => {
   const [topUp, setTopUp] = useState(false);
+  const [Deals, setDeals] = useState([]);
+  const [Bookings, setBookings] = useState([]);
+  const [ShowDeals, setShowDeals] = useState(true);
   const {userData, isLogged} = useSelector(state => state);
 
+  let token = userData.token;
+  const API = axios.create({
+    baseURL: 'http://35.178.37.45:5000/',
+    headers: {'x-auth-token': `${token}`},
+  });
+  console.log(token);
   // on boarding
   useEffect(() => {
-    // return async () => {
-    //   try {
-    //     const granted = await PermissionsAndroid.request(
-    //       PermissionsAndroid.PERMISSIONS.INTERNET,
-    //       {
-    //         title: 'YouGo Internet Permission',
-    //         message: 'YouGo App needs access to the Internet ',
-    //       },
-    //     );
-    //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-    //       Alert.alert('internet Permission Granted.');
-    //       if (isLogged !== true) {
-    //         navigation.navigate('Login');
-    //       }
-    //       // store token
-    //       AsyncStorage.setItem('@Token', `${userData.token}`);
-    //     } else {
-    //       Alert.alert('internet Permission Not Granted');
-    //     }
-    //   } catch (err) {
-    //     console.warn(err);
-    //   }
-    // };
     if (isLogged !== true) {
       navigation.navigate('Login');
     }
-    // store token
-    AsyncStorage.setItem('@Token', `${userData.token}`);
+
+    // get all bookings from Api
+    const Bookings = new Promise(resolve => {
+      resolve(API.post('user/booking/all'));
+    });
+    Bookings.then(({data: {data}}) => {
+      console.log(data);
+      setBookings(data);
+    });
+    // get top deals from Api
+    const TopDeals = new Promise(resolve => {
+      resolve(Instance.post('user/allTopdeals '));
+    });
+    TopDeals.then(({data: {data}}) => {
+      data.length > 0 ? setShowDeals(false) : false;
+      setDeals(data);
+    });
   }, []);
 
   // make calls
@@ -110,7 +114,10 @@ const HomeScreen = ({navigation}) => {
               <Text style={styles.viewText}>View All</Text>
             </TouchableOpacity>
           </View>
-          <CurrentRideCard makeCall={makeCall} TopUp={handleTopUp} />
+          <View style={{marginHorizontal: 17}}>
+            <NoCurrentRides />
+          </View>
+          {/* <CurrentRideCard makeCall={makeCall} TopUp={handleTopUp} /> */}
         </View>
         <View>
           <View style={styles.view}>
@@ -124,7 +131,20 @@ const HomeScreen = ({navigation}) => {
           </View>
 
           <View style={{marginHorizontal: 17}}>
-            <UpComingRides />
+            <NoRides />
+            {/* {Bookings.length < 0 ? (
+              <NoRides />
+            ) : (
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={Bookings}
+                keyExtractor={item => item._id}
+                renderItem={({item}) => {
+                  return <UpComingRides />;
+                }}
+              />
+            )} */}
           </View>
         </View>
         <View>
@@ -138,13 +158,15 @@ const HomeScreen = ({navigation}) => {
             </TouchableOpacity>
           </View>
           <View style={styles.current}>
+            {ShowDeals && <Text>No Deals Available...</Text>}
+
             <FlatList
               horizontal
               showsHorizontalScrollIndicator={false}
               data={Deals}
-              keyExtractor={item => item.id}
+              keyExtractor={item => item._id}
               renderItem={({item}) => {
-                return <TopDeals title={item.deal} price={item.price} />;
+                return <TopDeals title={item.title} price={item.description} />;
               }}
             />
           </View>

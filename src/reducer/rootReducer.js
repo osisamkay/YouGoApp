@@ -7,6 +7,8 @@ const {
   LOGIN_SUCCESS,
   CLOSE_ERROR,
   CLOSE_SUCCESS,
+  TRIP_DETAIL_ONE,
+  TRIP_DETAIL_TWO,
 } = actionType;
 
 const initialState = {
@@ -18,6 +20,8 @@ const initialState = {
   regError: '',
   isError: false,
   logError: '',
+  tripDetsOne: {},
+  tripDetsTwo: {},
 };
 
 export const rootReducer = (state = initialState, {type, payload}) => {
@@ -34,6 +38,10 @@ export const rootReducer = (state = initialState, {type, payload}) => {
       return {...state, isError: payload};
     case CLOSE_SUCCESS:
       return {...state, registration: payload};
+    case TRIP_DETAIL_ONE:
+      return {...state, tripDetsOne: payload};
+    case TRIP_DETAIL_TWO:
+      return {...state, tripDetsTwo: payload};
     default:
       return state;
   }

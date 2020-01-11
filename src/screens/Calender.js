@@ -15,12 +15,15 @@ import TimeModal from '../components/Modals/TimeModal';
 import AllButton from '../components/AllButtons';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment';
+import {useDispatch} from 'react-redux';
+import {SECONDTripDetails} from '../actions/Actions';
 
 const CalenderView = ({navigation}) => {
   const [modal, setModal] = useState(false);
   const [select, setSelect] = useState('');
   const [dates, setDates] = useState([]);
   const [serial, setSerial] = useState(false);
+  const [mode, setMode] = useState('random');
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [time, setTime] = useState(null);
@@ -28,12 +31,22 @@ const CalenderView = ({navigation}) => {
   const [stopTime, setStopTime] = useState(false);
   const [show, setShow] = useState(false);
   const [info, setInfo] = useState(false);
+  const [location, setLocation] = useState(false);
+
+  // dispatch
+  const dispatch = useDispatch();
 
   // function to select date at random
   const handleSelect = date => {
     setSelect(date);
     setInfo(true);
-    setDates([...dates, date.toString()]);
+    let dateFormat = moment(date).format('MMM Do YY');
+    setDates([...dates, dateFormat]);
+    if (!serial) {
+      setMode(['random', ...dates, dateFormat]);
+    } else {
+      setMode(['range', ...dates, dateFormat]);
+    }
   };
 
   //   function to select date serially
@@ -50,6 +63,7 @@ const CalenderView = ({navigation}) => {
 
   //   function closes modal and navigates to summary
   const handleNext = () => {
+    dispatch(SECONDTripDetails(tripDetails));
     setModal(false);
     navigation.navigate('Summary');
   };
@@ -79,6 +93,8 @@ const CalenderView = ({navigation}) => {
     setShow(true);
   };
 
+  const tripDetails = {location, time, mode}; //dispatch information
+  console.log(tripDetails);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#522E92" />
@@ -87,6 +103,7 @@ const CalenderView = ({navigation}) => {
           <TouchableOpacity
             onPress={() => {
               setSerial(true);
+              setDates([]);
             }}>
             <Text style={serial ? styles.modeTextPick : styles.modeText}>
               Serial
@@ -95,6 +112,7 @@ const CalenderView = ({navigation}) => {
           <TouchableOpacity
             onPress={() => {
               setSerial(false);
+              setDates([]);
             }}>
             <Text style={serial ? styles.modeText : styles.modeTextPick}>
               Random
@@ -112,28 +130,35 @@ const CalenderView = ({navigation}) => {
           />
         </View>
         <View style={styles.bottom}>
-          <FlatList
-            data={dates}
-            keyExtractor={(item, index) => index}
-            renderItem={item => {
-              const index = item.index;
-              return (
-                <View>
-                  <View style={styles.list}>
-                    <Text>
-                      <Icon name="dot-circle-o" color="#673ab7" /> {item.item}
-                    </Text>
-                    <TouchableOpacity
-                      onPress={() => {
-                        handleDelete(dates, index);
-                      }}>
-                      <Text style={styles.delete}>X</Text>
-                    </TouchableOpacity>
+          {!serial ? (
+            <FlatList
+              data={dates}
+              keyExtractor={(item, index) => index}
+              renderItem={item => {
+                const index = item.index;
+                return (
+                  <View>
+                    <View style={styles.list}>
+                      <Text>
+                        <Icon name="dot-circle-o" color="#673ab7" /> {item.item}
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          handleDelete(dates, index);
+                        }}>
+                        <Text style={styles.delete}>X</Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
-              );
-            }}
-          />
+                );
+              }}
+            />
+          ) : (
+            <View style={styles.list}>
+              <Text>From:{dates[0]}</Text>
+              <Text>To:{dates[1]}</Text>
+            </View>
+          )}
         </View>
       </ScrollView>
       <View style={styles.btn}>
@@ -155,6 +180,9 @@ const CalenderView = ({navigation}) => {
         ShowClock={showClock}
         ShowStopClock={showStopClock}
         handleStartTime={!stopTime ? handleStartTime : handleStopTime}
+        getLocation={text => {
+          setLocation(text);
+        }}
       />
     </SafeAreaView>
   );

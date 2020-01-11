@@ -1,9 +1,21 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, FlatList, StatusBar} from 'react-native';
 import TopDeals from '../components/TopDeals';
-import {Deals} from '../DealsData';
+import Instance from '../Api/Instance';
 
 const AllTopRides = () => {
+  const [Deals, setDeals] = useState([]);
+  const [ShowDeals, setShowDeals] = useState(true);
+  useEffect(() => {
+    // get top deals from Api
+    const TopDeals = new Promise(resolve => {
+      resolve(Instance.post('user/allTopdeals '));
+    });
+    TopDeals.then(({data: {data}}) => {
+      data.length > 0 ? setShowDeals(false) : false;
+      setDeals(data);
+    });
+  }, []);
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#522E92" />
@@ -12,12 +24,12 @@ const AllTopRides = () => {
           <FlatList
             showsVerticalScrollIndicator={false}
             data={Deals}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item._id}
             renderItem={({item}) => {
               return (
                 <TopDeals
-                  title={item.deal}
-                  price={item.price}
+                  title={item.title}
+                  price={item.description}
                   style={styles.content}
                 />
               );
@@ -47,9 +59,6 @@ const styles = StyleSheet.create({
   card: {
     paddingHorizontal: 17,
     marginTop: 17,
-    alignSelf: 'center',
-  },
-  content: {
     alignSelf: 'center',
   },
 });
